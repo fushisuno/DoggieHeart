@@ -1,25 +1,12 @@
-// app.js
-const postgres = require('postgres');
-require('dotenv').config();
+require("dotenv").config();
+const { neon } = require("@neondatabase/serverless");
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
-
-const sql = postgres({
-  host: PGHOST,
-  database: PGDATABASE,
-  username: PGUSER,
-  password: PGPASSWORD,
-  port: 5432,
-  ssl: 'require',
-  connection: {
-    options: `project=${ENDPOINT_ID}`,
-  },
-});
+const sql = neon(process.env.DATABASE_URL);
 
 async function getPgVersion() {
-  const result = await sql`select version()`;
+  const result = await sql`SELECT version()`;
   console.log(result);
 }
 
-
+getPgVersion()
 module.exports = sql
