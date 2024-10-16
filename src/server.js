@@ -2,7 +2,6 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path')
 const router = require('./routes/router')
-const userRouter = require('./routes/userRouter')
 const database = require('./config/db')
 const { runMigrations } = require('./config/migrations')
 const server = express();
@@ -14,7 +13,6 @@ server.use(express.static(path.join(__dirname, "../public")))
 
 runMigrations()
 
-server.use("/user", userRouter)
 server.use("/", router)
 
 
