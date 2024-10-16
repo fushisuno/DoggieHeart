@@ -4,6 +4,7 @@ const path = require('path')
 const router = require('./routes/router')
 const userRouter = require('./routes/userRouter')
 const database = require('./config/db')
+const { runMigrations } = require('./config/migrations')
 const server = express();
 
 server.use(helmet());
@@ -11,11 +12,9 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static(path.join(__dirname, "../public")))
 
-server.get("/", (req, res) =>{
-    res.send("Olá Mundo");
-});
+runMigrations()
 
-server.use("/user/", userRouter)
+server.use("/user", userRouter)
 server.use("/", router)
 
 

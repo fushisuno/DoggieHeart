@@ -8,5 +8,4 @@ async function getPgVersion() {
   console.log(result);
 }
 
-getPgVersion()
 module.exports = sql

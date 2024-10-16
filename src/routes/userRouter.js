@@ -1,9 +1,10 @@
 const express = require('express');
+const Dono = require('../models/Dono')
 
 const router = express.Router();
 
-router.get('/:user_name', (req, res) =>{
-    res.json({ user: req.params.user_name})
+router.get('/', (req, res) =>{
+    res.json()
 })
 
 module.exports = router
