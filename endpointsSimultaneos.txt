@@ -1,0 +1,58 @@
+const express = require('express');
+const { Pool } = require('pg');
+
+// Configuração do Pool de Conexões com PostgreSQL
+const pool = new Pool({
+    user: 'seu_usuario',
+    host: 'localhost',
+    database: 'seu_banco_de_dados',
+    password: 'sua_senha',
+    port: 5432,
+});
+
+const app = express();
+app.use(express.json());
+
+// Endpoint para criar Dono e Endereço simultaneamente
+app.post('/donos', async (req, res) => {
+    const { nome, cidade, rua, numero_residencia, bairro, complemento, uf } = req.body;
+
+    const client = await pool.connect();
+
+    try {
+        await client.query('BEGIN'); // Iniciar uma transação
+
+        // 1. Criar Novo Endereço
+        const resultadoEndereco = await client.query(
+            'INSERT INTO Endereco (cidade, rua, numero_residencia, bairro, complemento, uf) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+            [cidade, rua, numero_residencia, bairro, complemento, uf]
+        );
+        
+        const idEndereco = resultadoEndereco.rows[0].id; // Pega o novo ID do endereço
+
+        // 2. Criar Novo Dono com o ID do Endereço
+        const resultadoDono = await client.query(
+            'INSERT INTO Dono (nome, endereco_id) VALUES ($1, $2) RETURNING id',
+            [nome, idEndereco]
+        );
+
+        await client.query('COMMIT'); // Finaliza a transação
+
+        const idDono = resultadoDono.rows[0].id;
+
+        return res.status(201).json({ message: 'Dono e endereço criados com sucesso.', idDono, idEndereco }); 
+        
+    } catch (error) {
+        await client.query('ROLLBACK'); // Reverte a transação em caso de erro
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao criar dono e endereço.' });
+    } finally {
+        client.release(); // Libera a conexão
+    }
+});
+
+// Iniciar o Servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});

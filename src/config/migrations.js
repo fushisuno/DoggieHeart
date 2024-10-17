@@ -14,6 +14,7 @@ const createEnderecoTable = async () =>{
     const query = await db`
     CREATE TABLE IF NOT EXISTS Endereco(
     in_endereco SERIAL PRIMARY KEY,
+    codigo_postal VARCHAR(200) NOT NULL,
     cidade VARCHAR(200) NOT NULL,
     rua VARCHAR(200) NOT NULL,
     numero_residencia INT NOT NULL,
@@ -49,9 +50,9 @@ const createDonoTable = async () =>{
     in_dono SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    in_endereco INT REFERENCES Endereco(in_endereco),
-    in_telefone INT REFERENCES Telefone(in_telefone),
-    in_login INT REFERENCES Login(in_login)
+    in_endereco INT REFERENCES Endereco(in_endereco) ON DELETE SET NULL,
+    in_telefone INT REFERENCES Telefone(in_telefone) ON DELETE SET NULL,
+    in_login INT REFERENCES Login(in_login) ON DELETE CASCADE UNIQUE
     );`
 }
 
@@ -63,9 +64,9 @@ const createVeterinariaTable = async () =>{
     crmv VARCHAR(30) UNIQUE NOT NULL,
     especialidade VARCHAR(100),
     email VARCHAR(255) UNIQUE NOT NULL,
-    in_telefone INT REFERENCES Telefone(in_telefone),
-    in_endereco INT REFERENCES Endereco(in_endereco),
-    in_login INT REFERENCES Login(in_login)
+    in_endereco INT REFERENCES Endereco(in_endereco) ON DELETE SET NULL,
+    in_telefone INT REFERENCES Telefone(in_telefone) ON DELETE SET NULL,
+    in_login INT REFERENCES Login(in_login) ON DELETE CASCADE
     );`
 }
 

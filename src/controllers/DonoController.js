@@ -1,19 +1,60 @@
 const DonoModel = require('../models/Dono')
 
 class DonoController{
-    static createDono(req, res){
+    static async createDono(req, res){
         const {nome, email, in_endereco, in_telefone, in_login} = req.body
         try {
-            //const dono = await DonoModel.createDono(nome, email, in_endereco, in_telefone, in_login)
-            res.status(201).json({ 
-                nome: nome,
-                email: email
-            });
+            const dono = await DonoModel.createDonoComplete(nome, email, in_endereco, in_telefone, in_login)
+            res.status(201).json(dono)
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Erro ao criar o usuário' });
+            res.status(500).json({ message: 'Erro ao criar o dono' });
         }
 
+    }
+
+    static async updateDono(req, res){
+        const { in_dono } = req.params
+        const {nome, email, in_endereco, in_telefone, in_login} = req.body
+        try {
+            if(!await DonoModel.getByDonoId(in_dono)){
+                return res.status(404).json({message: "Dono não existe"})
+            }
+            const dono = await DonoModel.updateDono(nome, email, in_endereco, in_telefone, in_login, in_dono)
+            return res.status(201).json(dono)
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Erro ao criar o usuário' });
+        }
+
+    }
+
+    static async deleteDono(req, res){
+        const { in_dono } = req.params
+        try {
+            if(!await DonoModel.getByDonoId(in_dono)){
+                return res.status(404).json({message: "Dono não existe"})
+            }
+            const dono = await DonoModel.deleteDono(in_dono)
+            return res.status(201).json({message: "Dono excluido"})
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Erro ao criar o usuário' });
+        }
+    }
+
+    static async getByDonoId(req, res){
+        const { in_dono } = req.params
+        try{
+            const dono = await DonoModel.getByEnderecoId(in_dono)
+            if(!dono){
+                return res.status(404).json({message: "Dono não existe"})
+            }
+            return res.status(200).json(dono)
+        }catch(error){
+            console.error(error);
+            return res.status(500).json({ message: 'Erro ao criar o endereco' });
+        }
     }
     
 
