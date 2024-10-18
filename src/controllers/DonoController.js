@@ -4,7 +4,7 @@ class DonoController{
     static async createDono(req, res){
         const {nome, email, in_endereco, in_telefone, in_login} = req.body
         try {
-            const dono = await DonoModel.createDonoComplete(nome, email, in_endereco, in_telefone, in_login)
+            const dono = await DonoModel.createDono(nome, email, in_endereco, in_telefone, in_login)
             res.status(201).json(dono)
         } catch (error) {
             console.error(error);
@@ -46,7 +46,7 @@ class DonoController{
     static async getByDonoId(req, res){
         const { in_dono } = req.params
         try{
-            const dono = await DonoModel.getByEnderecoId(in_dono)
+            const dono = await DonoModel.getByDonoId(in_dono)
             if(!dono){
                 return res.status(404).json({message: "Dono não existe"})
             }

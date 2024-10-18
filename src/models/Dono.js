@@ -1,7 +1,7 @@
 const db = require('../config/db')
 
 class Dono{
-    static async createDonoComplete(nome, email, in_endereco, in_telefone, in_login){
+    static async createDono(nome, email, in_endereco, in_telefone, in_login){
         const query = await db`
         INSERT INTO Dono(nome, email, in_endereco, in_telefone, in_login) 
         VALUES(${nome}, ${email}, ${in_endereco}, ${in_telefone}, ${in_login})
