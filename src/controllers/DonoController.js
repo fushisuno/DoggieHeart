@@ -61,7 +61,17 @@ class DonoController{
     static async getAllDono(req, res){
         try {
             const donos = await DonoModel.getAllDono()
-            res.status(200).json(donos)
+            res.render('./pages/donos', {donos})
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Erro ao buscar usuários' });
+        }
+    }
+
+    static async getAllDonoJson(req, res){
+        try {
+            const donos = await DonoModel.getAllDono()
+            res.json(donos)
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Erro ao buscar usuários' });

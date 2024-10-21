@@ -1,0 +1,12 @@
+//- views/pages/index.pug
+extends ../layouts/layout.pug
+
+block content
+    h1 Lista de Donos
+    if donos.length > 0
+      ul
+        each dono in donos
+          li 
+            | Nome: #{dono.nome} - Email: #{dono.email}
+    else
+      p Não há donos cadastrados.

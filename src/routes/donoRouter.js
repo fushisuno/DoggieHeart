@@ -3,7 +3,8 @@ const DonoController = require('../controllers/DonoController')
 
 const router = express.Router();
 
-router.get('/all/', DonoController.getAllDono)
+router.get('/',DonoController.getAllDono)
+router.get('/api', DonoController.getAllDonoJson)
 router.post('/create/', DonoController.createDono)
 router.put('/update/:in_dono', DonoController.updateDono)
 router.delete('/delete/:in_dono', DonoController.deleteDono)

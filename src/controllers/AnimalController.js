@@ -58,8 +58,18 @@ class AnimalController{
 
     static async getAllAnimal(req, res){
         try {
-            const animals = await AnimalModel.getAllAnimal()
-            res.status(200).json(animals)
+            const animais = await AnimalModel.getAllAnimal()
+            res.render('./pages/animais', {animais})
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Erro ao buscar animais' });
+        }
+    }
+
+    static async getAllAnimalJson(req, res){
+        try {
+            const animais = await AnimalModel.getAllAnimal()
+            res.status(200).json(animais)
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Erro ao buscar animais' });
