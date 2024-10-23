@@ -2,6 +2,7 @@ const VeterinariaModel = require('../models/Veterinaria')
 
 class VeterinariaController{
     static async createVeterinaria(req, res){
+        console.log(req.body)
         const { nome, crmv, especialidade, email, in_endereco, in_telefone, in_login } = req.body
         try {
             const veterinaria = await VeterinariaModel.createVeterinaria(nome, crmv, especialidade, email, in_endereco, in_telefone, in_login)

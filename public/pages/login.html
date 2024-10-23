@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggie Heart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <header>
+        <section style="display: flex; height: 100%; width: 30%; justify-content: center; align-items: center;">
+            <img src="../../../public/img/part1Logo.svg" alt="" srcset="" style="height: 90%;">
+            <img src="../../../public/img/DoggieHeartLetter.svg" alt="" srcset="" style="height: 50%;">
+        </section>
+        <nav style="width: 40%; margin: 0px;">
+            <ul
+                style="display: flex; justify-content: space-around; list-style: none; align-items: center; margin: 0px; padding: 0px;">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="ajuda.html">Ajuda</a></li>
+            </ul>
+        </nav>
+        <div class="user-area" style="display: flex; width: 20%; justify-content: center;">
+            <div class="button">
+                <a href="login.html" style="padding: .5em;">Login</a>
+            </div>
+        </div>
+    </header>
+    <section class="header-section">
+        <div class="form">
+            <form class="inputs-bottom-form" id="login-form" method="POST">
+                <div class="inputs-text-top">
+                    <label for="">Login</label>
+                </div>
+                <div class="input-bottom">
+                    <input type="email" name="email" id="email" placeholder="Email ou Username" required>
+                    <div style="position: relative;">
+                        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+                        <button type="button" id="toggle-password"
+                            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                            <i class="fa-solid fa-eye" id="eye-icon-login"></i>
+                        </button>
+                    </div>
+                    <a href="#" class="btn btn-form-send" id="login-button">Entrar</a>
+                </div>
+                <div class="text-bottom-inputs">
+                    <p>Não tem conta? <a href="./cadastro.html">Crie a sua aqui</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('senha');
+        const loginButton = document.getElementById('login-button');
+
+        // Função para validar o formulário
+        function validateLoginForm() {
+            const email = emailInput.value.trim();
+            const senha = passwordInput.value.trim();
+
+            if (!email || !senha) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Preenchimento obrigatório',
+                    text: 'Por favor, preencha todos os campos obrigatórios.'
+                });
+                return false;
+            }
+
+            // Validação simples de e-mail
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email inválido',
+                    text: 'Por favor, insira um e-mail válido.'
+                });
+                return false;
+            }
+
+            return true;
+        }
+
+        // Captura o evento de clique no botão de login
+
+
+        // Função para alternar a visibilidade da senha
+        const togglePasswordLoginBtn = document.getElementById('toggle-password');
+        const eyeIconLogin = document.getElementById('eye-icon-login');
+
+        togglePasswordLoginBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIconLogin.classList.toggle('fa-eye');
+            eyeIconLogin.classList.toggle('fa-eye-slash');
+        });
+
+
+        loginButton.addEventListener('click', async function (event) {
+            event.preventDefault();
+            if (!validateLoginForm()) return;
+
+            const email = emailInput.value;
+            const senha = passwordInput.value;
+
+            try {
+                const response = await fetch('https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_name: email, senha })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: result.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() =>{
+                        window.location.href = './indexDono.html';
+                    });
+                    loginForm.reset();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro ao realizar login',
+                        text: result.message
+                    });
+                }
+
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao realizar login',
+                    text: error.message
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

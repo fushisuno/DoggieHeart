@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggie Heart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Adicionando SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <header>
+        <section style="display: flex; height: 100%; width: 30%; justify-content: center; align-items: center;">
+            <img src="../../../public/img/part1Logo.svg" alt="" srcset="" style="height: 90%;">
+            <img src="../../../public/img/DoggieHeartLetter.svg" alt="" srcset="" style="height: 50%;">
+        </section>
+        <nav style="width: 40%; margin: 0px;">
+            <ul
+                style="display: flex; justify-content: space-around; list-style: none; align-items: center; margin: 0px; padding: 0px;">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="ajuda.html">Ajuda</a></li>
+            </ul>
+        </nav>
+        <div class="user-area" style="display: flex; width: 20%; justify-content: center;">
+            <div class="button">
+                <a href="login.html" style="padding: .5em;">Login</a>
+            </div>
+        </div>
+    </header>
+    <section class="header-section">
+        <div class="form">
+            <form class="inputs-bottom-form" id="registration-form">
+                <div class="inputs-text-top">
+                    <label for="">Cadastro</label>
+                </div>
+                <div class="input-bottom">
+                    <div class="input">
+                        <label class="checkbox-label"><input type="checkbox" name="user-type" value="dono"
+                                id="checkbox-dono" checked> Dono</label>
+                        <label class="checkbox-label"><input type="checkbox" name="user-type" value="veterinaria"
+                                id="checkbox-veterinaria"> Veterinário</label>
+                        <label class="checkbox-label"><input type="checkbox" name="user-type" value="adm"
+                                id="checkbox-adm"> Admin</label>
+                    </div>
+                    <input type="text" id="nome" placeholder="Seu Nome" required>
+                    <input type="email" id="email" placeholder="Seu Email" required>
+                    <div style="position: relative;">
+                        <input type="password" id="senha" placeholder="Sua Senha" required>
+                        <button type="button" id="toggle-password"
+                            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                            <i class="fa-solid fa-eye" id="eye-icon"></i>
+                        </button>
+                    </div>
+                    <div id="additional-fields">
+                        <input type="text" id="crmv" placeholder="Seu CRMV" required>
+                        <input type="text" id="especialidade" placeholder="Sua Especialidade" required>
+                    </div>
+                    <a href="./login.html" class="btn btn-form-send" id="register-button">Cadastrar</a>
+                </div>
+                <div class="text-bottom-inputs">
+                    <p>Já tem uma conta? <a href="./login.html">Entre aqui</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const checkboxes = document.querySelectorAll('input[name="user-type"]');
+        const additionalFields = document.getElementById('additional-fields');
+        const registrationForm = document.getElementById('registration-form');
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('senha');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        // Exibir ou esconder campos adicionais baseado no tipo de usuário
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                checkboxes.forEach(cb => cb.checked = false);
+                checkbox.checked = true;
+                additionalFields.style.display = document.getElementById('checkbox-veterinaria').checked ? 'flex' : 'none';
+            });
+        });
+
+        // Função para validar os campos
+        function validateForm() {
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const crmv = document.getElementById('crmv').value;
+            const especialidade = document.getElementById('especialidade').value;
+
+            if (!nome || !email || !senha) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Preenchimento obrigatório',
+                    text: 'Por favor, preencha todos os campos obrigatórios.'
+                });
+                return false;
+            }
+
+            // Validação simples de e-mail
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email inválido',
+                    text: 'Por favor, insira um e-mail válido.'
+                });
+                return false;
+            }
+
+            // Validação da senha (mínimo 6 caracteres)
+            if (senha.length < 6) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Senha inválida',
+                    text: 'A senha deve ter pelo menos 6 caracteres.'
+                });
+                return false;
+            }
+
+            // Verificar se "Veterinário" está selecionado e se os campos adicionais estão preenchidos
+            if (document.getElementById('checkbox-veterinaria').checked) {
+                if (!crmv || !especialidade) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Campos obrigatórios',
+                        text: 'Por favor, preencha os campos CRMV e Especialidade.'
+                    });
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Função para alternar a visibilidade da senha
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+
+        // Captura do clique no botão de cadastro
+        document.getElementById('register-button').addEventListener('click', async function (e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
+            if (!validateForm()) return; // Verifica se o formulário é válido
+
+            // Coletando os dados do formulário
+            const userType = Array.from(checkboxes).find(checkbox => checkbox.checked).value;
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const crmv = document.getElementById('crmv').value;
+            const especialidade = document.getElementById('especialidade').value;
+
+            const userData = {
+                userType,
+                nome,
+                email,
+                senha,
+                crmv,
+                especialidade
+            };
+
+            try {
+                // Enviar os dados
+                const response = await fetch(`https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/login/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro na requisição: ' + response.statusText);
+                }
+
+                const result = await response.json();
+                console.log('Cadastro bem-sucedido:', result);
+
+                // Alerta de sucesso
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cadastro realizado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                }).then(() => {
+                    window.location.href = './login.html'; // Redireciona após o sucesso
+                });
+                // Limpa os campos do formulário
+                registrationForm.reset();
+                additionalFields.style.display = 'none'; // Oculta os campos adicionais novamente
+            } catch (error) {
+                console.error('Erro ao fazer cadastro:', error);
+
+                // Alerta de erro
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao realizar cadastro',
+                    text: error.message
+                });
+            }
+        });
+
+        // Inicializa o estado dos campos adicionais como invisíveis
+        additionalFields.style.display = 'none';
+    </script>
+</body>
+
+</html>

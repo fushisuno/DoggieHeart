@@ -1,18 +1,29 @@
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
-const router = require('./routes/router');
 const database = require('./config/db');
 const { runMigrations } = require('./config/migrations');
+const cors = require('cors')
+const session = require('express-session');
+require('dotenv').config()
 
 const server = express();
 
-// Configurações do Pug
-server.set('view engine', 'pug'); // Define o Pug como mecanismo de template
-server.set('views', path.join(__dirname, './views')); // Define o diretório das views
-
+server.use(cors());
 // Configurações de segurança
 server.use(helmet());
+server.use(session({
+    secret: process.env.PASSWORD_SESSION,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false, // Defina como true se estiver em HTTPS
+        maxAge: 1000 * 60 * 60 // 1 hora 
+    } 
+}));
+
+const router = require('./routes/router');
+
 
 // Middleware para parsing de JSON e URL-encoded
 server.use(express.json()); // Parsing JSON
@@ -26,11 +37,8 @@ const startServer = async () => {
     try {
         // Executa as migrações para criar tabelas, etc.
         await runMigrations();
-        
+
         // Usar o router para as rotas
-        router.get('/', (req, res) => {
-            res.render('./pages/index'); // Renderiza a view index.pug
-        });
         server.use("/", router);
 
         // Inicia o servidor

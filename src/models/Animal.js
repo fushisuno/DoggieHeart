@@ -60,6 +60,18 @@ class Animal {
         });
         return query;
     }
+    static async getAllAnimalDono(in_dono) {
+        const query = await db`
+        SELECT * FROM Animal as a 
+        JOIN Dono as d 
+        ON a.in_dono = d.in_dono
+        WHERE a.in_dono = ${in_dono}
+        `.catch(error => {
+            console.error(error);
+            throw new Error("Erro interno ao buscar todos os animais");
+        });
+        return query;
+    }
 }
 
 module.exports = Animal;

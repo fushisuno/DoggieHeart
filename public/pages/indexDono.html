@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggie Heart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <header>
+        <section style="display: flex; height: 100%; width: 30%; justify-content: center; align-items: center;">
+            <img src="../../../public/img/part1Logo.svg" alt="" srcset="" style="height: 90%;">
+            <img src="../../../public/img/DoggieHeartLetter.svg" alt="" srcset="" style="height: 50%;">
+        </section>
+        <nav style="width: 40%; margin: 0px;">
+            <ul
+                style="display: flex; justify-content: space-around; list-style: none; align-items: center; margin: 0px; padding: 0px;">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="animais.html">Animais</a></li>
+                <!--
+                    <li><a href="consultas.html">Consultas</a></li>
+                    <li><a href="vacinas.html">Vacinas</a></li>
+                    <li><a href="exames.html">Exames</a></li>
+                    <li><a href="alergias.html">Alergias</a></li>
+                    <li><a href="prontuarios.html">Prontuários</a></li>
+                -->
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="ajuda.html">Ajuda</a></li>
+            </ul>
+        </nav>
+        <div class="user-area" style="display: flex; width: 20%; justify-content: center;">
+            <div class="button">
+                <a href="#" style="padding: .5em;">Tutor</a>
+            </div>
+        </div>
+    </header>
+    <section class="header-tutor">
+        <div class="header-tutor-left">
+            <div class="tutor-left-items">
+                <div class="animals-item">
+                    <div class="animals-item-image">
+                        <img src="../img/dog1.jpg" alt="Animal 1" class="animal-item-profile">
+                    </div>
+                    <div class="animals-item-info">
+                        <h3>Animal 1</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel praesentium accusamus reiciendis
+                            adipisci?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-tutor-rigth">
+            <div class="tutor-rigth-top-lasted-animals">
+                <div class="lasted-animals-card">
+                    <div class="animals-card-image">
+                        <img src="../img/dog1.jpg" alt="" srcset="">
+                    </div>
+                    <div class="aniamls-card-info">
+                        <div class="card-info-top">
+                            <h2>Bravo</h2>
+                            <p>Labrador Golden</p>
+                        </div>
+                        <hr class="custom">
+                        <div class="card-info-bottom">
+                            <div class="card-info-bottom-idad">
+                                <h2>Idade</h2>
+                                <p>7 anos</p>
+                            </div>
+                            <div class="card-info-bottom-medid">
+                                <label for="">
+                                    <p class="info_med">
+                                    <h3>321</h3>kg</p>
+                                </label>
+                                <label for="">
+                                    <p class="info_med">
+                                    <h3>120</h3>cm</p>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lasted-animals-card">
+                    <div class="animals-card-image">
+                        <img src="../img/dog1.jpg" alt="" srcset="">
+                    </div>
+                    <div class="aniamls-card-info">
+                        <div class="card-info-top">
+                            <h2>Bravo</h2>
+                            <p>Labrador Golden</p>
+                        </div>
+                        <hr class="custom">
+                        <div class="card-info-bottom">
+                            <div class="card-info-bottom-idad">
+                                <h2>Idade</h2>
+                                <p>7 anos</p>
+                            </div>
+                            <div class="card-info-bottom-medid">
+                                <label for="">
+                                    <p class="info_med">
+                                    <h3>321</h3>kg</p>
+                                </label>
+                                <label for="">
+                                    <p class="info_med">
+                                    <h3>120</h3>cm</p>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tutor-rigth-bottom-grafics">
+                <div class="bottom-grafics-card">
+
+                </div>
+                <div class="bottom-grafics-card-percent">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const animalsItems = document.querySelectorAll('.tutor-left-items .animals-item');
+            const moreButtonContainer = document.querySelector('.more-button-container');
+
+            // Exibe apenas os 4 primeiros itens
+            for (let i = 0; i < animalsItems.length; i++) {
+                if (i < 4) {
+                    animalsItems[i].classList.add('show');
+                }
+            }
+
+            // Verifica se há mais de 4 itens para exibir o botão "Ver Mais"
+            if (animalsItems.length > 4) {
+                const button = document.createElement('button');
+                button.textContent = 'Ver Mais';
+                button.className = 'view-more-button';
+                button.onclick = function () {
+                    animalsItems.forEach(item => item.classList.add('show'));
+                    moreButtonContainer.innerHTML = ''; // Remove o botão após clicar
+                };
+
+                moreButtonContainer.appendChild(button); // Adiciona o botão ao contêiner
+            }
+        });
+    </script>
+</body>
+
+</html>

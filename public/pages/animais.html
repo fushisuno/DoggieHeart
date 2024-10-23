@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggie Heart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-tutor {
+            display: flex;
+            flex: 1;
+            /* Toma todo o espaço disponível */
+        }
+
+        .header-tutor-left {
+            padding: 10px;
+            width: 30%;
+            /* Ajuste a largura conforme necessário */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilo para o botão Adicionar Novo Animal */
+        #addAnimalBtn {
+            padding: 10px 15px;
+            background-color: #3d8a4e;
+            /* Cor de fundo do botão */
+            color: white;
+            /* Cor do texto */
+            border: none;
+            /* Remove a borda padrão */
+            border-radius: 5px;
+            /* Arredondamento dos cantos */
+            cursor: pointer;
+            /* Cursor de ponteiro ao passar o mouse */
+            font-size: 16px;
+            /* Tamanho da fonte */
+            margin-bottom: 20px;
+            /* Aumenta a margem para separar do topo da lista */
+            transition: background-color 0.3s;
+            /* Transição suave para a cor de fundo */
+            margin-top: .8rem;
+        }
+
+        #addAnimalBtn:hover {
+            background-color: #adcbd7;
+            /* Cor do fundo ao passar o mouse */
+        }
+
+        .animal-list {
+            list-style: none;
+            padding: 0;
+            flex: 1;
+            /* Faz a lista ocupar o máximo de espaço possível */
+            overflow-y: auto;
+            /* Adiciona rolagem se necessário */
+        }
+
+        .animal-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            /* Reduzido para ficar mais compacto */
+            justify-content: space-between;
+            /* Espaço entre itens */
+        }
+
+        .animal-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: relative;
+            /* Para posicionar o botão de fechar */
+        }
+
+        .popup-content-title {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        /* Estilos para o botão de fechar */
+        .close {
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: red;
+            font-size: 1.5rem;
+            background: none;
+            /* Fundo invisível */
+            border: none;
+            font-weight: bold;
+            /* Remove borda */
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: darkred;
+            /* Cor ao passar o mouse */
+        }
+
+        /* Estilo para o formulário */
+        #animalForm {
+            max-width: 100%;
+        }
+
+        #animalForm input {
+            width: 100%;
+            /* O input ocupa toda a largura do formulário */
+            padding: 10px;
+            /* Adiciona um padding interno para mais conforto */
+            border: 1px solid #ccc;
+            /* Borda padrão */
+            border-radius: 5px;
+            /* Arredondamento dos cantos */
+            margin-bottom: 15px;
+            /* Espaço entre os inputs */
+            box-sizing: border-box;
+            /* Garante que o padding não afete a largura total */
+        }
+
+        /* Estilo para o botão de Cadastro */
+        #animalForm button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #3d8a4e;
+            /* Cor de fundo do botão */
+            color: white;
+            /* Cor do texto */
+            border: none;
+            /* Remove a borda padrão */
+            border-radius: 5px;
+            /* Arredondamento dos cantos */
+            cursor: pointer;
+            /* Cursor de ponteiro ao passar o mouse */
+            font-size: 16px;
+            /* Tamanho da fonte */
+            width: 100%;
+            /* O botão ocupa toda a largura do formulário */
+            transition: background-color 0.3s;
+            /* Transição suave para a cor de fundo */
+        }
+
+        #animalForm button[type="submit"]:hover {
+            background-color: #adcbd7;
+            /* Cor do fundo ao passar o mouse */
+        }
+
+        /* Estilo para os ícones de editar e deletar */
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .icon-button i {
+            font-size: 1.5rem;
+        }
+
+        .icon-button:hover {
+            color: #0056b3;
+        }
+
+        .delete-icon {
+            color: #dc3545;
+            /* Vermelho para o ícone de deletar */
+        }
+
+        .delete-icon:hover {
+            color: #c82333;
+            /* Cor mais escura ao passar o mouse */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <section style="display: flex; height: 100%; width: 30%; justify-content: center; align-items: center;">
+            <img src="../../../public/img/part1Logo.svg" alt="" srcset="" style="height: 90%;">
+            <img src="../../../public/img/DoggieHeartLetter.svg" alt="" srcset="" style="height: 50%;">
+        </section>
+        <nav style="width: 40%; margin: 0;">
+            <ul
+                style="display: flex; justify-content: space-around; list-style: none; align-items: center; margin: 0; padding: 0;">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="animais.html">Animais</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="ajuda.html">Ajuda</a></li>
+            </ul>
+        </nav>
+        <div class="user-area" style="display: flex; width: 20%; justify-content: center;">
+            <div class="button">
+                <a href="#" style="padding: .5em;">Tutor</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="header-tutor">
+        <div class="header-tutor-left">
+            <button id="addAnimalBtn">Adicionar Novo Animal</button>
+            <ul class="animal-list" id="animalList"></ul>
+        </div>
+    </section>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <div class="popup-content-title">
+                <h2 id="popupTitle">Cadastro de Animal</h2>
+                <button class="close" id="closePopup">×</button>
+            </div>
+            <form id="animalForm">
+                <label for="name">Nome:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="breed">Raça:</label><br>
+                <input type="text" id="breed" name="breed" required><br>
+                <label for="age">Idade:</label><br>
+                <input type="number" id="age" name="age" required><br><br>
+                <button type="submit" id="submitAnimalBtn">Cadastrar Animal</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let currentAnimalId = null;
+
+        // Função para carregar os animais da API
+        async function loadAnimals() {
+            const response = await fetch('https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/animal/dono');
+            const animals = await response.json();
+            const animalList = document.getElementById('animalList');
+            animalList.innerHTML = '';
+
+            animals.forEach(animal => {
+                const li = document.createElement('li');
+                li.className = 'animal-item';
+                li.id = `animal-${animal.in_animal}`; // ID único para cada item
+                li.innerHTML = `
+                    <img src='../img/dog1.jpg' alt='${animal.nome}' />
+                    <div>
+                        <h3>${animal.nome}</h3>
+                        <p>Raça: ${animal.raca}</p>
+                        <p>Idade: ${animal.idade} anos</p>
+                    </div>
+                    <div>
+                        <button class="icon-button edit-icon" onclick="openEditPopup(${animal.in_animal}, '${animal.nome}', '${animal.raca}', ${animal.idade})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-button delete-icon" onclick="deleteAnimal(${animal.in_animal})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                animalList.appendChild(li);
+            });
+        }
+
+        // Função para abrir o popup de edição
+        function openEditPopup(id, name, breed, age) {
+            currentAnimalId = id;
+            document.getElementById('name').value = name;
+            document.getElementById('breed').value = breed;
+            document.getElementById('age').value = age;
+            document.getElementById('popupTitle').textContent = 'Atualizar Animal';
+            document.getElementById('submitAnimalBtn').textContent = 'Atualizar Animal';
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        // Chama função de carregar animais ao carregar a página
+        window.onload = loadAnimals;
+
+        // Abre o formulário de cadastro
+        document.getElementById('addAnimalBtn').onclick = function () {
+            currentAnimalId = null; // Indicando que não estamos editando
+            document.getElementById('animalForm').reset(); // Reseta o formulário
+            document.getElementById('popupTitle').textContent = 'Cadastrar Animal';
+            document.getElementById('submitAnimalBtn').textContent = 'Cadastrar Animal';
+            document.getElementById('popup').style.display = 'flex';
+        };
+
+        // Fecha o popup
+        document.getElementById('closePopup').onclick = function () {
+            document.getElementById('popup').style.display = 'none';
+        };
+
+        // Cadastra ou edita o animal
+        document.getElementById('animalForm').onsubmit = async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const animalData = {
+                nome: formData.get('name'),
+                raca: formData.get('breed'),
+                idade: parseInt(formData.get('age'))
+            };
+
+            try {
+                if (currentAnimalId) {
+                    // Atualiza animal existente
+                    await fetch(`https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/animal/update/${currentAnimalId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(animalData)
+                    });
+                    // Atualizando a lista sem recarregar
+                    updateAnimalInList(currentAnimalId, animalData);
+                    Swal.fire('Animal atualizado com sucesso!', '', 'success');
+                } else {
+                    // Cadastra novo animal
+                    await fetch('https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/animal/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(animalData)
+                    });
+                    Swal.fire('Animal cadastrado com sucesso!', '', 'success');
+                    loadAnimals(); // Recarrega a lista após cadastro
+                }
+
+                // Fecha o popup
+                document.getElementById('popup').style.display = 'none';
+            } catch (error) {
+                Swal.fire('Erro', 'Ocorreu um erro ao realizar a operação.', 'error');
+            }
+        };
+
+        // Nova função para atualizar o animal na lista
+        function updateAnimalInList(id, updatedData) {
+            const animalItem = document.getElementById(`animal-${id}`);
+            if (animalItem) {
+                animalItem.innerHTML = `
+                    <img src='../img/dog1.jpg' alt='${updatedData.nome}' />
+                    <div>
+                        <h3>${updatedData.nome}</h3>
+                        <p>Raça: ${updatedData.raca}</p>
+                        <p>Idade: ${updatedData.idade} anos</p>
+                    </div>
+                    <div>
+                        <button class="icon-button edit-icon" onclick="openEditPopup(${id}, '${updatedData.nome}', '${updatedData.raca}', ${updatedData.idade})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-button delete-icon" onclick="deleteAnimal(${id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Função para deletar um animal
+        async function deleteAnimal(id) {
+            const result = await Swal.fire({
+                title: 'Tem certeza?',
+                text: 'Você não poderá reverter isso!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!'
+            });
+
+            if (result.isConfirmed) {
+                await fetch(`https://bug-free-sniffle-5jjgwpxv97ph45g9-8080.app.github.dev/animal/delete/${id}`, {
+                    method: 'DELETE'
+                });
+
+                // Recarrega a lista de animais
+                loadAnimals();
+                Swal.fire('Deletado!', 'O animal foi removido.', 'success');
+            }
+        }
+    </script>
+</body>
+
+</html>

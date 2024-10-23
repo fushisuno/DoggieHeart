@@ -27,7 +27,7 @@ router.use('/telefone', telefoneRouter);
 router.use('/login', loginRouter);
 router.use('/dono', donoRouter);
 router.use('/veterinaria', veterinariaRouter);
-router.use('/animai', animalRouter);
+router.use('/animal', animalRouter);
 router.use('/vacina', vacinaRouter);
 router.use('/medicamento', medicamentoRouter);
 router.use('/consulta', consultaRouter);

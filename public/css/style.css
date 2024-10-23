@@ -1,3 +1,466 @@
-body{
-    
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    font-size: 1rem;
+    color: #000;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header a {
+    color: #000;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1d4641;
+    cursor: pointer;
+}
+
+header .user-area .button {
+    display: inline-block;
+    padding: .5rem 1.5rem;
+    background-color: #3d8a4e;
+    color: white !important;
+    text-align: center;
+    text-decoration: none;
+    border-radius: .8rem;
+    transition: background-color 0.3s;
+}
+
+.user-area a {
+    color: white !important;
+}
+
+.user-area .button:hover {
+    background-color: #adcbd7;
+}
+
+.user-area .button:hover a {
+    color: #1d4641 !important;
+}
+
+.header-section {
+    width: 100%;
+    height: 90vh;
+    background-image: url('../../../public/img/homeBackground2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header-tutor {
+    width: 100%;
+    height: 90vh;
+    background-image: url('../img/homeBackground.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+
+}
+
+.header-tutor .header-tutor-left {
+    width: 30%;
+    height: auto; /* Mantém flexibilidade */
+    max-height: 80vh; /* Limita a altura máxima */
+    padding: 0 1rem;
+    background-color: #fefefe;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.header-tutor-left .tutor-left-items {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    gap: 1.2rem;
+}
+
+.tutor-left-items .animals-item {
+    width: 90%;
+    height: auto; /* Permite que a altura se ajuste ao conteúdo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.animals-item .animals-item-image {
+    width: 50%;
+    height: auto;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden;
+}
+
+.animals-item .animals-item-image img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: solid .35rem #1d4641;
+    object-fit: cover;
+}
+
+.animals-item .animals-item-info {
+    width: 100%;
+}
+
+.animals-item-info p {
+    font-size: .75rem;
+    color: #333333;
+    text-align: justify;
+}
+.animals-item-info h3 {
+    color: #1d4641;
+}
+
+
+
+.animals-item {
+    display: none; /* Oculta todos os itens por padrão */
+}
+
+.animals-item.show {
+    display: flex; /* Mostra itens com a classe ".show" */
+}
+
+.more-button-container {
+    margin-top: 1rem;
+}
+
+.view-more-button {
+    padding: 0.5rem 1rem;
+    background-color: #1d4641;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-more-button:hover {
+    background-color: #154d4a;
+}
+
+.tutor-left-items {
+    display: flex;
+    flex-direction: column; /* Para empilhar os itens verticalmente */
+    gap: 1rem; /* Espaço entre os itens */
+}
+
+/* Estilos adicionais para melhorar a aparência dos itens */
+.animals-item-image img {
+    width: 100px; /* Ajuste conforme necessário */
+    height: auto; /* Manter proporções */
+}
+
+.animals-item-info {
+    margin-top: 0.5rem;
+}
+
+
+
+
+.header-tutor .header-tutor-rigth {
+    width: 60%;
+    height: 80vh;
+    padding: 0 .5rem;
+
+    /*background-color: #c92b2b;*/
+}
+
+.header-tutor-rigth .tutor-rigth-top-lasted-animals {
+    display: flex;
+    height: 25vh;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.tutor-rigth-top-lasted-animals .lasted-animals-card {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: .8rem .5rem;
+    background-color: #fefefe;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.lasted-animals-card .animals-card-image {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lasted-animals-card .animals-card-image img {
+    width: 75%;
+    height: 80%;
+    border-radius: 100%;
+    border: solid .25rem #1d4641;
+    object-fit: cover;
+}
+
+.lasted-animals-card .aniamls-card-info {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.aniamls-card-info h2{
+    color: #1d4641;
+}
+.aniamls-card-info h3{
+    color: #4a7b7d;
+}
+.aniamls-card-info hr.custom{
+    height: 1px;
+    background-color: #e0e0e0;
+    border: none;
+}
+
+.aniamls-card-info, .card-info-bottom p{
+    font-size: .8rem;
+}
+.aniamls-card-info .card-info-bottom{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: .2rem;
+}
+
+.aniamls-card-info .card-info-bottom .card-info-bottom-medid {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.card-info-bottom-medid label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .1rem;
+}
+
+.header-section .form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs-bottom-form {
+    width: 40%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 2rem;
+    padding: 1rem;
+    background-color: ghostwhite;
+    box-shadow: 0 .3rem 1rem rgb(0, 0, 0, 0.4);
+}
+
+#senha {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+button#toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+button#toggle-password i {
+    font-size: 1rem;
+}
+
+.inputs-bottom-form .inputs-text-top {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding-bottom: .6rem;
+}
+
+.inputs-text-top label {
+    font-size: 1.5rem;
+    color: #3d8a4e;
+}
+
+.inputs-bottom-form .input-bottom {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.input-bottom .input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+input {
+    padding: .8rem;
+    font-size: 16px;
+    border: .15rem solid #3d8a4e;
+    border-radius: 1.8rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #5cbf7e;
+}
+
+.inputs-bottom-form .text-bottom-inputs {
+    padding: 1rem 0;
+}
+
+.text-bottom-inputs a {
+    color: #1d4641;
+}
+
+.text-bottom-inputs a:hover {
+    color: #5cbf7e !important;
+}
+
+.checkbox-label {
+    font-size: 1rem;
+    color: #3d8a4e;
+    margin: 0.5rem 0;
+}
+
+.btn-form-send {
+    background-color: #3d8a4e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.btn-form-send:hover {
+    background-color: #adcbd7;
+}
+
+#additional-fields {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    display: none;
+}
+
+section .cards {
+    display: flex;
+}
+
+.cards-home {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    transform: translate(0%, -50%);
+}
+
+.card-item {
+    width: 20%;
+    background-color: #fefefe;
+    display: flex;
+    flex-direction: row;
+    padding: 1.5rem;
+    border-radius: .8rem;
+    justify-items: center;
+    align-items: center;
+    box-shadow: 0 .3rem 1rem rgba(0, 0, 0, 0.4);
+    font-size: 1rem;
+}
+
+i {
+    color: #3b9b41;
+    font-size: 2rem;
+}
+
+.card-item .text-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+
+.info-home-dog {
+    width: auto;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    justify-content: center;
+    margin: 0 10%;
+    padding: 20px;
+}
+
+.info-home-dog h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    color: #000;
+}
+
+.info-home-dog p {
+    font-size: 1em;
+    margin-bottom: 1.5em;
+    color: #333;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #3d8a4e;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #adcbd7;
 }

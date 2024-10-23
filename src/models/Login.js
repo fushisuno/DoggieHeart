@@ -58,6 +58,20 @@ class Login {
         });
         return query;
     }
+
+    static async getByLoginEmail(email) {
+        const query = await db`
+        SELECT l.user_name, l.senha, d.in_dono 
+        FROM Login as l 
+        JOIN Dono as d
+        ON l.in_login = d.in_login
+        WHERE l.user_name = ${email}
+        `.catch(error => {
+            console.error(error);
+            throw new Error("Erro ao buscar login");
+        });
+        return query[0];
+    }
 }
 
 module.exports = Login;

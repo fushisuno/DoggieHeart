@@ -1,4 +1,6 @@
+const { stringify } = require('querystring');
 const AnimalModel = require('../models/Animal')
+const session = require('express-session');
 
 class AnimalController{
     static async createAnimal(req, res){
@@ -59,7 +61,17 @@ class AnimalController{
     static async getAllAnimal(req, res){
         try {
             const animais = await AnimalModel.getAllAnimal()
-            res.render('./pages/animais', {animais})
+            res.status(200).json(animais)
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Erro ao buscar animais' });
+        }
+    }
+
+    static async getAllAnimalDono(req, res){
+        try {
+            const animais = await AnimalModel.getAllAnimal()
+            res.status(200).json(animais)
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Erro ao buscar animais' });
