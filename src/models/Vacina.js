@@ -1,10 +1,10 @@
-const db = require('../config/db')
+const db = require('../config/db');
 
 class Vacina {
-    static async createVacina(nome, data_vacinacao, proxima_dose, observacoes) {
+    static async createVacina(nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario) {
         const query = await db`
-        INSERT INTO Vacina(nome, data_vacinacao, proxima_dose, observacoes)
-        VALUES(${nome}, ${data_vacinacao}, ${proxima_dose}, ${observacoes})
+        INSERT INTO Vacina(nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario)
+        VALUES(${nome}, ${ultima_aplicacao}, ${proxima_dose}, ${descricao}, ${in_animal}, ${in_veterinario})
         RETURNING *
         `.catch(error => {
             console.error(error);
@@ -14,14 +14,17 @@ class Vacina {
         return query[0];
     }
 
-    static async updateVacina(nome, data_vacinacao, proxima_dose, observacoes, in_vacina) {
+    static async updateVacina(nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario, in_vacina) {
         const query = await db`
         UPDATE Vacina
         SET
             nome = ${nome},
-            data_vacinacao = ${data_vacinacao},
+            ultima_aplicacao = ${ultima_aplicacao},
             proxima_dose = ${proxima_dose},
-            observacoes = ${observacoes}
+            descricao = ${descricao},
+            in_animal = ${in_animal},
+            in_veterinario = ${in_veterinario}
+            
         WHERE in_vacina = ${in_vacina}
         RETURNING in_vacina
         `.catch(error => {

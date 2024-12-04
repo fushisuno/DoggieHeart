@@ -1,0 +1,194 @@
+<main>
+    <section class="agenda-header">
+        <h1 class="agenda-title">Agenda de Consultas e Exames</h1>
+        <p class="agenda-subtitle">Gerencie todas as consultas e exames dos seus pets em um só lugar</p>
+    </section>
+
+    <section class="calendar-section">
+        <div class="calendar-header">
+            <div class="month-navigation">
+                <button class="nav-btn" id="prevMonth">&lt;</button>
+                <div class="current-month" id="currentMonth">Dezembro 2023</div>
+                <button class="nav-btn" id="nextMonth">&gt;</button>
+            </div>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Dom</div>
+            <div class="calendar-day-header">Seg</div>
+            <div class="calendar-day-header">Ter</div>
+            <div class="calendar-day-header">Qua</div>
+            <div class="calendar-day-header">Qui</div>
+            <div class="calendar-day-header">Sex</div>
+            <div class="calendar-day-header">Sáb</div>
+        </div>
+        <div id="calendarDays" class="calendar-grid"></div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background-color: var(--secondary)"></div>
+                <span>Consultas</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background-color: var(--primary)"></div>
+                <span>Exames</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="appointments-section">
+        <h2>Compromissos Agendados</h2>
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Data e Hora</th>
+                    <th>Tipo</th>
+                    <th>Animal</th>
+                    <th>Veterinário</th>
+                    <th>Situação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsTableBody">
+                <tr>
+                    <td>05/12/2023, 14:30</td>
+                    <td>Consulta</td>
+                    <td>Rex</td>
+                    <td>Dr. Silva</td>
+                    <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                    <td class="action-buttons">
+                        <button class="btn btn-edit" data-id="1">Editar</button>
+                        <button class="btn btn-cancel" data-id="1">Cancelar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="additional-info-section">
+        <div class="info-container">
+            <div class="preparation-tips">
+                <h2>Prepare-se para sua Consulta</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M14,17H7V15H14M17,13H7V11H17M17,9H7V7H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
+                        </svg>
+                        <h3>Documentos Necessários</h3>
+                        <ul>
+                            <li>Carteira de vacinação</li>
+                            <li>Histórico médico recente</li>
+                            <li>Resultados de exames anteriores</li>
+                        </ul>
+                    </div>
+                    <div class="tip-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z" />
+                        </svg>
+                        <h3>Informações Importantes</h3>
+                        <ul>
+                            <li>Histórico de sintomas</li>
+                            <li>Mudanças de comportamento</li>
+                            <li>Medicamentos em uso</li>
+                        </ul>
+                    </div>
+                    <div class="tip-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12,3C7.03,3 3,7.03 3,12C3,16.97 7.03,21 12,21C16.97,21 21,16.97 21,12C21,7.03 16.97,3 12,3M12,19C8.13,19 5,15.87 5,12C5,8.13 8.13,5 12,5C15.87,5 19,8.13 19,12C19,15.87 15.87,19 12,19M15.04,10.54L11.03,14.54L8.96,12.46L7.54,13.88L11.03,17.38L16.46,11.96L15.04,10.54Z" />
+                        </svg>
+                        <h3>Preparação</h3>
+                        <ul>
+                            <li>Jejum quando necessário</li>
+                            <li>Transportadora adequada</li>
+                            <li>Chegar 10min antes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-links">
+                <h2>Links Rápidos</h2>
+                <div class="links-grid">
+                    <a href="https://www.petcare.vet/clinica" class="link-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12,2C15.86,2 19,5.13 19,9C19,14.25 12,22 12,22C12,22 5,14.25 5,9A7,7 0 0,1 12,2M12,4A5,5 0 0,0 7,9C7,10 7,12 12,18.71C17,12 17,10 17,9A5,5 0 0,0 12,4M12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5" />
+                        </svg>
+                        <h3>Nossa Clínica</h3>
+                        <p>Conheça nossa estrutura e localização</p>
+                    </a>
+                    <a href="https://www.petcare.vet/equipe" class="link-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M16,13C15.71,13 15.38,13 15.03,13.05C16.19,13.89 17,15 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M8,11A3,3 0 0,0 11,8A3,3 0 0,0 8,5A3,3 0 0,0 5,8A3,3 0 0,0 8,11M16,11A3,3 0 0,0 19,8A3,3 0 0,0 16,5A3,3 0 0,0 13,8A3,3 0 0,0 16,11Z" />
+                        </svg>
+                        <h3>Nossa Equipe</h3>
+                        <p>Conheça nossos veterinários</p>
+                    </a>
+                    <a href="https://www.petcare.vet/servicos" class="link-card">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                        <h3>Nossos Serviços</h3>
+                        <p>Conheça todos os serviços disponíveis</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Confirmar Cancelamento</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <p>Tem certeza que deseja cancelar este agendamento?</p>
+        <div class="action-buttons" style="margin-top: 1.5rem">
+            <button class="btn btn-cancel" id="confirmCancel">Confirmar</button>
+            <button class="btn" style="background-color: #999; color: white;" id="cancelAction">Voltar</button>
+        </div>
+    </div>
+</div>
+
+<div id="settingsModal" class="modal">
+    <div class="modal-content settings-modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Configurações de Notificação</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="notification-settings">
+            <div class="setting-item">
+                <span>Notificações por E-mail</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="emailNotif">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span>Notificações por SMS</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="smsNotif">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span>Notificações no Navegador</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="browserNotif">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="action-buttons" style="margin-top: 1.5rem">
+            <button class="btn btn-edit" id="saveSettings">Salvar Configurações</button>
+        </div>
+    </div>
+</div>
+
+<script src="./js/agenda.js"></script>

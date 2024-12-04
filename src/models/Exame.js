@@ -1,8 +1,8 @@
 class Exame {
-    static async createExame(tipo_exame, data_exame, resultado, observacoes) {
+    static async createExame(tipo_exame, data_exame, resultados, in_consulta) {
         const query = await db`
-        INSERT INTO Exame(tipo_exame, data_exame, resultado, observacoes)
-        VALUES(${tipo_exame}, ${data_exame}, ${resultado}, ${observacoes})
+        INSERT INTO Exame(tipo, data_exame, resultado, in_consulta)
+        VALUES(${tipo_exame}, ${data_exame}, ${resultados}, ${in_consulta})
         RETURNING *
         `.catch(error => {
             console.error(error);
@@ -11,15 +11,15 @@ class Exame {
 
         return query[0];
     }
-    
-    static async updateExame(tipo_exame, data_exame, resultado, observacoes, in_exame) {
+
+    static async updateExame(tipo_exame, data_exame, resultados, in_exame) {
         const query = await db`
         UPDATE Exame
         SET
-            tipo_exame = ${tipo_exame},
+            tipo = ${tipo_exame},
             data_exame = ${data_exame},
-            resultado = ${resultado},
-            observacoes = ${observacoes}
+            resultado = ${resultados},
+
         WHERE in_exame = ${in_exame}
         RETURNING in_exame
         `.catch(error => {
@@ -31,25 +31,25 @@ class Exame {
     }
 
     static async deleteExame(in_exame) {
-        const query = await db`
+    const query = await db`
         DELETE FROM Exame
         WHERE in_exame = ${in_exame}
         `;
-        return query;
-    }
+    return query;
+}
 
     static async getByExameId(in_exame) {
-        const query = await db`
+    const query = await db`
         SELECT * FROM Exame
         WHERE in_exame = ${in_exame}
         `;
-        return query[0];
-    }
+    return query[0];
+}
 
     static async getAllExames() {
-        const query = await db`SELECT * FROM Exame`;
-        return query;
-    }
+    const query = await db`SELECT * FROM Exame`;
+    return query;
+}
 }
 
 module.exports = Exame;

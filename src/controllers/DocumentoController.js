@@ -2,9 +2,9 @@ const DocumentoModel = require('../models/Documento');
 
 class DocumentoController {
     static async createDocumento(req, res) {
-        const { tipo_documento, arquivo } = req.body;
+        const { arquivo, descricao, tipo_documento, data_emissao } = req.body; // Todos os campos necessários
         try {
-            const documento = await DocumentoModel.createDocumento(tipo_documento, arquivo);
+            const documento = await DocumentoModel.createDocumento(arquivo, descricao, tipo_documento, data_emissao);
             res.status(201).json(documento);
         } catch (error) {
             console.error(error);
@@ -14,12 +14,13 @@ class DocumentoController {
 
     static async updateDocumento(req, res) {
         const { in_documento } = req.params;
-        const { tipo_documento, arquivo } = req.body;
+        const { arquivo, descricao, tipo_documento, data_emissao } = req.body; // Todos os campos necessários
         try {
-            if (!await DocumentoModel.getByDocumentoId(in_documento)) {
+            const existingDocument = await DocumentoModel.getByDocumentoId(in_documento);
+            if (!existingDocument) {
                 return res.status(404).json({ message: "Documento não existe" });
             }
-            const documento = await DocumentoModel.updateDocumento(tipo_documento, arquivo, in_documento);
+            const documento = await DocumentoModel.updateDocumento(arquivo, descricao, tipo_documento, data_emissao, in_documento);
             return res.status(200).json(documento);
         } catch (error) {
             console.error(error);

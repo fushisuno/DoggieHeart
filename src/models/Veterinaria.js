@@ -1,10 +1,12 @@
 const db = require('../config/db');
+const bcrypt = require('bcryptjs');
 
 class Veterinaria {
-    static async createVeterinaria(nome, crmv, especialidade, email, in_endereco, in_telefone, in_login) {
+    static async createVeterinaria(nome, in_endereco, in_telefone, user_name, email, senha, avatar) {
+        const hashedPassword = await bcrypt.hash(senha, 10);
         const query = await db`
-            INSERT INTO Veterinaria(nome, crmv, especialidade, email, in_endereco, in_telefone, in_login)
-            VALUES(${nome}, ${crmv}, ${especialidade}, ${email}, ${in_endereco}, ${in_telefone}, ${in_login})
+            INSERT INTO Veterinaria(nome, in_endereco, in_telefone, user_name, email, senha, avatar)
+            VALUES(${nome}, ${in_endereco}, ${in_telefone}, ${user_name}, ${email}, ${hashedPassword}, ${avatar})
             RETURNING *
         `.catch(error => {
             console.error(error);
@@ -13,17 +15,16 @@ class Veterinaria {
         return query[0];
     }
 
-    static async updateVeterinaria(nome, crmv, especialidade, email, in_endereco, in_telefone, in_login, in_veterinaria) {
+    static async updateVeterinaria(nome, in_endereco, in_telefone, email, senha, avatar, in_veterinaria) {
         const query = await db`
             UPDATE Veterinaria
             SET
                 nome = ${nome},
-                crmv = ${crmv},
-                especialidade = ${especialidade},
-                email = ${email},
                 in_endereco = ${in_endereco},
                 in_telefone = ${in_telefone},
-                in_login = ${in_login}
+                email = ${email}
+                senha = ${senha}
+                avatar = ${avatar}
             WHERE in_veterinaria = ${in_veterinaria}
             RETURNING in_veterinaria
         `.catch(error => {
@@ -62,6 +63,17 @@ class Veterinaria {
             throw new Error("Erro ao buscar todas as veterinárias");
         });
         return query;
+    }
+
+    static async findByUserNameOrEmail(user_name_or_email) {
+        const query = await db`
+        SELECT * FROM Veterinaria
+        WHERE user_name = ${user_name_or_email} OR email = ${user_name_or_email}
+        `.catch(error => {
+            console.error(error);
+            throw new Error("Erro ao buscar dono");
+        });
+        return query[0]
     }
 }
 

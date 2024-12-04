@@ -1,11 +1,10 @@
 const EnderecoModel = require('../models/Endereco')
 
 class EnderecoController{
-    static async createEndereco(req, res){
-        const {codigo_postal, cidade, rua, numero_residencia, bairro, complemento, uf} = req.body
+    static async createEndereco(codigo_postal, cidade, rua, numero_residencia, bairro, complemento, uf){
         try {
             const idEndereco = await EnderecoModel.createEndereco(codigo_postal, cidade, rua, numero_residencia, bairro, complemento, uf)
-            return res.status(201).json(idEndereco);
+            return idEndereco;
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Erro ao criar o endereco' });

@@ -1,0 +1,276 @@
+<main class="dashboard-container">
+  <div class="stats-grid">
+    <div class="stat-card appointments">
+      <div class="stat-header">
+        <div class="stat-icon">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="stat-number">12</div>
+      <div class="stat-label">Consultas Agendadas Hoje</div>
+    </div>
+
+    <div class="stat-card patients">
+      <div class="stat-header">
+        <div class="stat-icon">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="stat-number">8</div>
+      <div class="stat-label">Pacientes Atendidos</div>
+    </div>
+
+    <div class="stat-card alerts">
+      <div class="stat-header">
+        <div class="stat-icon">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="stat-number">3</div>
+      <div class="stat-label">Alertas Pendentes</div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Consultas por Mês</h3>
+        <p class="chart-subtitle">Número total de consultas realizadas em 2024</p>
+      </div>
+      <div class="chart-container">
+        <canvas id="consultasChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Taxa de Retorno</h3>
+        <p class="chart-subtitle">Porcentagem de pacientes que retornaram para consultas</p>
+      </div>
+      <div class="chart-container">
+        <canvas id="retornoChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="patients-table">
+    <div class="quick-appointments">
+      <div class="calendar-card">
+        <div class="card-header">
+          <h2 class="card-title">Calendário de Agendamentos</h2>
+          <button class="new-appointment-btn" data-modal-target="appointmentModal">
+            <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+            </svg>
+            Novo Agendamento
+          </button>
+        </div>
+        <div class="calendar-container">
+          <div class="month-year"></div>
+          <div class="appointment-filters">
+            <div class="filter-chip active">Todos</div>
+            <div class="filter-chip">Primeira Consulta</div>
+            <div class="filter-chip">Retorno</div>
+            <div class="filter-chip">Emergência</div>
+          </div>
+
+          <div id="calendar"></div>
+
+          <div class="appointment-list">
+            <div class="appointment-item">
+              <div class="appointment-info">
+                <span class="appointment-time">09:00</span>
+                <div class="appointment-details">
+                  <span class="appointment-pet">Max (Primeira Consulta)</span>
+                  <span class="appointment-owner">Responsável: Ana Silva</span>
+                </div>
+              </div>
+              <div class="appointment-actions">
+                <button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Detalhes</button>
+              </div>
+            </div>
+            <!-- Add more appointment items as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-header">
+      <h2 class="table-title">Pacientes Recentes</h2>
+      <div class="table-filters">
+        <select class="filter-select">
+          <option value="all">Todos os Status</option>
+          <option value="healthy">Saudável</option>
+          <option value="treatment">Em Tratamento</option>
+        </select>
+        <select class="filter-select">
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+          <option value="90">Últimos 90 dias</option>
+        </select>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Pet</th>
+          <th>Responsável</th>
+          <th>Última Consulta</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Max</td>
+          <td>Ana Silva</td>
+          <td>15/03/2024</td>
+          <td><span class="status-badge status-healthy">Saudável</span></td>
+          <td><button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Perfil</button></td>
+        </tr>
+        <tr>
+          <td>Luna</td>
+          <td>Carlos Santos</td>
+          <td>14/03/2024</td>
+          <td><span class="status-badge status-treatment">Em Tratamento</span></td>
+          <td><button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Perfil</button></td>
+        </tr>
+        <tr>
+          <td>Thor</td>
+          <td>Maria Oliveira</td>
+          <td>14/03/2024</td>
+          <td><span class="status-badge status-healthy">Saudável</span></td>
+          <td><button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Perfil</button></td>
+        </tr>
+        <tr>
+          <td>Nina</td>
+          <td>Pedro Costa</td>
+          <td>13/03/2024</td>
+          <td><span class="status-badge status-treatment">Em Tratamento</span></td>
+          <td><button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Perfil</button></td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td>Julia Mendes</td>
+          <td>13/03/2024</td>
+          <td><span class="status-badge status-healthy">Saudável</span></td>
+          <td><button class="view-profile-btn" data-modal-target="appointmentDetailsModal">Ver Perfil</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="../js/dashboard.js"></script>
+
+<div class="modal" id="appointmentModal">
+  <div class="modal-content">
+    <h2>Novo Agendamento</h2>
+    <form id="appointmentForm">
+      <div class="form-group">
+        <label for="pet-name">Nome do Pet</label>
+        <input type="text" id="pet-name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="owner-name">Nome do Responsável</label>
+        <input type="text" id="owner-name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-date">Data da Consulta</label>
+        <input type="date" id="appointment-date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-time">Horário</label>
+        <input type="time" id="appointment-time" required>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-type">Tipo de Consulta</label>
+        <select id="appointment-type" required>
+          <option value="">Selecione o tipo</option>
+          <option value="first-visit">Primeira Consulta</option>
+          <option value="return">Retorno</option>
+          <option value="emergency">Emergência</option>
+          <option value="vaccine">Vacinação</option>
+          <option value="exam">Exames</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="appointment-notes">Observações</label>
+        <textarea id="appointment-notes"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel">Cancelar</button>
+        <button type="submit" class="action_button">Salvar Agendamento</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="appointmentDetailsModal">
+  <div class="modal-content">
+    <h2>Detalhes da Consulta</h2>
+    <div class="appointment-details-content">
+      <div class="detail-group">
+        <label>Pet</label>
+        <p id="detail-pet-name"></p>
+      </div>
+      <div class="detail-group">
+        <label>Responsável</label>
+        <p id="detail-owner-name"></p>
+      </div>
+      <div class="detail-group">
+        <label>Data e Hora</label>
+        <p id="detail-datetime"></p>
+      </div>
+      <div class="detail-group">
+        <label>Tipo de Consulta</label>
+        <p id="detail-type"></p>
+      </div>
+      <div class="detail-group">
+        <label>Status</label>
+        <p id="detail-status"></p>
+      </div>
+      <div class="detail-group">
+        <label>Histórico</label>
+        <p id="detail-history"></p>
+      </div>
+      <div class="detail-group">
+        <label>Observações</label>
+        <p id="detail-notes"></p>
+      </div>
+
+      <div class="form-actions">
+        <button class="edit-btn">Editar Consulta</button>
+        <button class="btn-cancel">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="dayAppointmentsModal">
+  <div class="modal-content">
+    <h2>Consultas do Dia <span id="selected-date"></span></h2>
+    <div class="appointment-list-content">
+      <div class="appointment-filters">
+        <div class="filter-chip active">Todas</div>
+        <div class="filter-chip">Manhã</div>
+        <div class="filter-chip">Tarde</div>
+      </div>
+      <div id="day-appointments-list"></div>
+    </div>
+  </div>
+</div>

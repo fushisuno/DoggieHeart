@@ -1,11 +1,10 @@
 const TelefoneModel = require('../models/Telefone')
 
 class TelefoneController{
-    static async createTelefone(req, res){
-        const { ddd, numero } = req.body
+    static async createTelefone(ddd, numero){
         try {
             const idTelefone = await TelefoneModel.createTelefone(ddd, numero)
-            return res.status(201).json(idTelefone)
+            return idTelefone
         } catch (error) {
             console.log(error)
             return res.status(500).json({ message: "Erro ao inserir telefone" })
@@ -64,6 +63,5 @@ class TelefoneController{
         }
     }
 }
-
 
 module.exports = TelefoneController

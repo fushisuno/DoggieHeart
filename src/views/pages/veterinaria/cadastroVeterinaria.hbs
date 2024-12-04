@@ -1,0 +1,121 @@
+<title>Cadastro de Veterinária</title>
+
+<main class="main-form">
+    <div class="form-container">
+        <div class="form-header">
+            <h1 class="form-title">Cadastre sua Veterinária</h1>
+            <p class="form-subtitle">Preencha os campos para cadastrar sua clínica veterinária</p>
+        </div>
+
+        <form id="vetForm" action="/veterinaria/create" method="POST">
+            <!-- Informações da Veterinária -->
+            <div class="form-group">
+                <label class="form-label" for="nome">Nome da Veterinária</label>
+                <input type="text" id="nome" name="nome" class="form-input" required>
+            </div>
+
+            <!-- Endereço -->
+            <fieldset>
+                <legend class="form-legend">Endereço</legend>
+                <div class="form-group">
+                    <label class="form-label" for="codigo_postal">Código Postal</label>
+                    <input type="text" id="codigo_postal" name="codigo_postal" class="form-input" pattern="\d{5}-\d{3}"
+                        placeholder="00000-000" required>
+                    <span id="cep-error" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="rua">Rua</label>
+                    <input type="text" id="rua" name="rua" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="numero_residencia">Número</label>
+                    <input type="text" id="numero_residencia" name="numero_residencia" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="bairro">Bairro</label>
+                    <input type="text" id="bairro" name="bairro" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="complemento">Complemento</label>
+                    <input type="text" id="complemento" name="complemento" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="uf">UF</label>
+                    <select id="uf" name="uf" class="form-input" required>
+                        <option value="" disabled selected>Selecione o estado</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Telefone -->
+            <fieldset>
+                <legend class="form-legend">Contato</legend>
+                <div class="form-group">
+                    <label class="form-label" for="ddd">DDD</label>
+                    <input type="text" id="ddd" name="ddd" class="form-input" pattern="\d{2}" placeholder="00" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="numero">Número</label>
+                    <input type="text" id="numero" name="numero" class="form-input" pattern="\d{4,5}-\d{4}"
+                        placeholder="0000-0000" required>
+                </div>
+            </fieldset>
+
+            <!-- Credenciais -->
+            <fieldset>
+                <legend class="form-legend">Credenciais</legend>
+                <div class="form-group">
+                    <label class="form-label" for="user_name">Nome de Usuário</label>
+                    <input type="text" id="user_name" name="user_name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-input" required>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="form-btn">Cadastrar Veterinária</button>
+
+            <p class="register-link">
+                Já tem uma conta? <a href="/login">Faça login</a>
+            </p>
+        </form>
+    </div>
+</main>
+
+<script src="../js/cadastroVeterinaria.js"></script>

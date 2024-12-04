@@ -2,9 +2,9 @@ const VacinaModel = require('../models/Vacina');
 
 class VacinaController {
     static async createVacina(req, res) {
-        const { nome, data_vacinacao, proxima_dose, observacoes } = req.body;
+        const { nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario } = req.body;
         try {
-            const vacina = await VacinaModel.createVacina(nome, data_vacinacao, proxima_dose, observacoes);
+            const vacina = await VacinaModel.createVacina(nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario);
             res.status(201).json(vacina);
         } catch (error) {
             console.error(error);
@@ -14,12 +14,13 @@ class VacinaController {
 
     static async updateVacina(req, res) {
         const { in_vacina } = req.params;
-        const { nome, data_vacinacao, proxima_dose, observacoes } = req.body;
+        const { nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario } = req.body;
         try {
-            if (!await VacinaModel.getByVacinaId(in_vacina)) {
+            const existingVacina = await VacinaModel.getByVacinaId(in_vacina);
+            if (!existingVacina) {
                 return res.status(404).json({ message: "Vacina não existe" });
             }
-            const vacina = await VacinaModel.updateVacina(nome, data_vacinacao, proxima_dose, observacoes, in_vacina);
+            const vacina = await VacinaModel.updateVacina(nome, ultima_aplicacao, proxima_dose, descricao, in_animal, in_veterinario, in_vacina);
             return res.status(200).json(vacina);
         } catch (error) {
             console.error(error);
@@ -30,7 +31,8 @@ class VacinaController {
     static async deleteVacina(req, res) {
         const { in_vacina } = req.params;
         try {
-            if (!await VacinaModel.getByVacinaId(in_vacina)) {
+            const existingVacina = await VacinaModel.getByVacinaId(in_vacina);
+            if (!existingVacina) {
                 return res.status(404).json({ message: "Vacina não existe" });
             }
             await VacinaModel.deleteVacina(in_vacina);

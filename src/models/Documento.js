@@ -1,8 +1,8 @@
 class Documento {
-    static async createDocumento(tipo_documento, arquivo, data_upload = new Date()) {
+    static async createDocumento(arquivo, descricao, tipo_documento, data_emissao) {
         const query = await db`
-        INSERT INTO Documento(tipo_documento, arquivo, data_upload)
-        VALUES(${tipo_documento}, ${arquivo}, ${data_upload})
+        INSERT INTO Documento(arquivo, descricao, tipo_documento, data_emissao)
+        VALUES(${arquivo}, ${descricao}, ${tipo_documento}, ${data_emissao})
         RETURNING *
         `.catch(error => {
             console.error(error);
@@ -12,12 +12,14 @@ class Documento {
         return query[0];
     }
     
-    static async updateDocumento(tipo_documento, arquivo, in_documento) {
+    static async updateDocumento(arquivo, descricao, tipo_documento, data_emissao, in_documento) {
         const query = await db`
         UPDATE Documento
         SET
+            arquivo = ${arquivo},
+            descricao = ${descricao},
             tipo_documento = ${tipo_documento},
-            arquivo = ${arquivo}
+            data_emissao = ${data_emissao},
         WHERE in_documento = ${in_documento}
         RETURNING in_documento
         `.catch(error => {

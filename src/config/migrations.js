@@ -1,7 +1,7 @@
 const { error } = require('console')
 const db = require('./db')
 
-const createTesteTable = async () =>{
+const createTesteTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS teste(
     id serial PRIMARY KEY,
@@ -10,7 +10,7 @@ const createTesteTable = async () =>{
     );`
 }
 
-const createEnderecoTable = async () =>{
+const createEnderecoTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Endereco(
     in_endereco SERIAL PRIMARY KEY,
@@ -24,15 +24,16 @@ const createEnderecoTable = async () =>{
     );`
 }
 
-const createTelefoneTable = async () =>{
+const createTelefoneTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Telefone(
     in_telefone SERIAL PRIMARY KEY,
     ddd SMALLINT NOT NULL,
-    numero VARCHAR(20) NOT NULL
+    numero VARCHAR(20) NOT NULL UNIQUE
     );`
 }
 
+/*
 const createLoginTable = async () =>{
     const query = await db`
     CREATE TABLE IF NOT EXISTS Login(
@@ -43,110 +44,203 @@ const createLoginTable = async () =>{
     data_cadastro DATE DEFAULT NOW()
     );`
 }
+*/
 
-const createDonoTable = async () =>{
+const createDonoTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Dono (
     in_dono SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    sobrenome VARCHAR(100),
+    cpf VARCHAR(100) NOT NULL,
     in_endereco INT REFERENCES Endereco(in_endereco) ON DELETE SET NULL,
     in_telefone INT REFERENCES Telefone(in_telefone) ON DELETE SET NULL,
-    in_login INT REFERENCES Login(in_login) ON DELETE CASCADE UNIQUE
+    user_name VARCHAR(200) UNIQUE, 
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(100) NOT NULL,
+    avatar BYTEA,
+    data_cadastro DATE DEFAULT NOW()
     );`
 }
 
-const createVeterinariaTable = async () =>{
+const createVeterinariaTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Veterinaria (
     in_veterinaria SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    crmv VARCHAR(30) UNIQUE NOT NULL,
-    especialidade VARCHAR(100),
-    email VARCHAR(255) UNIQUE NOT NULL,
     in_endereco INT REFERENCES Endereco(in_endereco) ON DELETE SET NULL,
     in_telefone INT REFERENCES Telefone(in_telefone) ON DELETE SET NULL,
-    in_login INT REFERENCES Login(in_login) ON DELETE CASCADE
+    user_name VARCHAR(200) UNIQUE, 
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(100) NOT NULL,
+    avatar BYTEA,
+    data_cadastro DATE DEFAULT NOW()
     );`
 }
 
-const createAnimalTable = async () =>{
+const createEspecialidadeTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Especialidade (
+    in_especialidade SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao VARCHAR(200)
+    );`
+}
+
+const createVeterinarioTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Veterinario (
+    in_veterinario SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    sobrenome VARCHAR(100),
+    crmv VARCHAR(100) NOT NULL,
+    in_endereco INT REFERENCES Endereco(in_endereco) ON DELETE SET NULL,
+    in_telefone INT REFERENCES Telefone(in_telefone) ON DELETE SET NULL,
+    especialidade VARCHAR(100),
+    in_veterinaria INT REFERENCES Veterinaria(in_veterinaria) ON DELETE SET NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    avatar BYTEA,
+    data_cadastro DATE DEFAULT NOW()
+    );`
+}
+
+const createAnimalTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Animal (
     in_animal SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) NOT NULL,   
+    especie VARCHAR(20) NOT NULL, 
     raca VARCHAR(100),
     idade INT CHECK (idade >= 0),
-    in_dono INT REFERENCES Dono(in_dono),
+    sexo VARCHAR(100), 
+    peso FLOAT, 
+    foto VARCHAR(200), 
+    ultima_consulta TIMESTAMP,
+    in_dono INT REFERENCES Dono(in_dono) ON DELETE CASCADE,
     in_veterinaria INT REFERENCES Veterinaria(in_veterinaria)
     );`
 }
 
-const createVacinaTable = async () =>{
+/*
+const createAgendaTable = async () => {
     const query = await db`
-    CREATE TABLE IF NOT EXISTS Vacina (
-    in_vacina SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    data_vacinacao DATE NOT NULL,
-    proxima_dose DATE,
-    observacoes TEXT
+    CREATE TABLE IF NOT EXISTS Agenda (
+    in_agenda SERIAL PRIMARY KEY,
+    data TIMESTAMP NOT NULL,
+    tipo VARCHAR(200) NOT NULL,
+    in_animal INT REFERENCES Animal(in_animal) NOT NULL ON DELETE SET NULL,
+    in_veterinario INT REFERENCES Veterinario(in_veterinario) NOT NULL ON DELETE SET NULL,
+    observações TEXT,
+    situacao VARCHAR(100) NOT NULL
     );`
 }
 
-const createMedicamentoTable = async () =>{
-    const query = await db`
-    CREATE TABLE IF NOT EXISTS Medicamento (
-    in_medicamento SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    dosagem VARCHAR(100),
-    frequencia VARCHAR(100),
-    data_inicio DATE NOT NULL,
-    data_fim DATE NOT NULL,
-    observacoes TEXT
-    );`
-}
-
-const createConsultaTable = async () =>{
-    const query = await db`
-    CREATE TABLE IF NOT EXISTS Consulta (
-    in_consulta SERIAL PRIMARY KEY,
-    data_consulta DATE NOT NULL,
-    motivo TEXT NOT NULL,
-    recomendacoes TEXT
-    );`
-}
-
-const createExameTable = async () =>{
-    const query = await db`
-    CREATE TABLE IF NOT EXISTS Exame (
-    in_exame SERIAL PRIMARY KEY,
-    tipo_exame VARCHAR(255) NOT NULL,
-    data_exame DATE NOT NULL,
-    resultado TEXT NOT NULL,
-    observacoes TEXT
-    );`
-}
-
-const createDocumentoTable = async () =>{
+const createDocumentoTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Documento (
     in_documento SERIAL PRIMARY KEY,
-    tipo_documento VARCHAR(255) NOT NULL,
     arquivo BYTEA NOT NULL,
-    data_upload TIMESTAMP DEFAULT NOW()
+    descricao TEXT,
+    tipo_documento VARCHAR(255) NOT NULL,
+    data_emissao DATE,
+    data_upload TIMESTAMP DEFAULT NOW(),
+    in_animal INT REFERENCES Animal(in_animal) ON DELETE SET NULL
+    );`
+}
+*/
+
+const createVacinaTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Vacina (
+    in_vacina SERIAL PRIMARY KEY,
+    nome VARCHAR(200) NOT NULL, 
+    ultima_aplicacao DATE DEFAULT NOW(),
+    proxima_dose DATE,
+    descricao TEXT,
+    in_animal INT REFERENCES Animal(in_animal) ON DELETE SET NULL,
+    in_veterinario INT REFERENCES Veterinario(in_veterinario) ON DELETE SET NULL
     );`
 }
 
-const createProntuarioTable = async () =>{
+
+const createDocumentoTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Documento(
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    data_aplicacao TIMESTAMP,
+    proxima_aplicacao TIMESTAMP,
+    data_validade TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'Pendente', 
+    caminho_arquivo VARCHAR(255) NOT NULL,
+    data_upload TIMESTAMP DEFAULT NOW(),
+    descricao TEXT,
+    in_animal INT REFERENCES Animal(in_animal) ON DELETE CASCADE
+    );`
+}
+
+const createConsultaTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Consulta (
+    in_consulta SERIAL PRIMARY KEY,
+    data_hora TIMESTAMP NOT NULL,
+    motivo TEXT NOT NULL,
+    tipo TEXT NOT NULL,
+    status TEXT NOT NULL,
+    historico TEXT,
+    observacoes TEXT,
+    in_animal INT REFERENCES Animal(in_animal) ON DELETE CASCADE,
+    in_veterinario INT REFERENCES Veterinario(in_veterinario) ON DELETE SET NULL
+    );`
+}
+
+
+const createExameTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Exame (
+    in_exame SERIAL PRIMARY KEY,
+    tipo TEXT,
+    data_exame DATE,
+    resultado TEXT,
+    in_consulta INT REFERENCES Consulta(in_consulta)
+    );`
+}
+
+const createHistoricoSaudeTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS HistoricoSaude (
+    in_historico_saude SERIAL PRIMARY KEY,
+    data_historico DATE,
+    descricao TEXT,
+    in_animal INT REFERENCES animal(in_animal) ON DELETE CASCADE
+    );`;
+}
+
+const createProntuarioTable = async () => {
     const query = await db`
     CREATE TABLE IF NOT EXISTS Prontuario (
     in_prontuario SERIAL PRIMARY KEY,
     in_animal INT REFERENCES Animal(in_animal) ON DELETE CASCADE,
-    in_vacina INT REFERENCES Vacina(in_vacina) ON DELETE SET NULL,
-    in_medicamento INT REFERENCES Medicamento(in_medicamento) ON DELETE SET NULL,
-    in_exame INT REFERENCES Exame(in_exame) ON DELETE SET NULL,
+    data_abertura DATE, 
+    historico_medicamento TEXT,
+    alergias TEXT,
+    condicoes_preexistentes TEXT,
+    observacoes TEXT,
+    in_veterinario INT REFERENCES Veterinario(in_veterinario) ON DELETE SET NULL
+    );`
+}
+
+const createReceitaTable = async () => {
+    const query = await db`
+    CREATE TABLE IF NOT EXISTS Receita (
+    in_receita SERIAL PRIMARY KEY,
     in_consulta INT REFERENCES Consulta(in_consulta) ON DELETE SET NULL,
-    observacoes TEXT
+    medicamento VARCHAR(200), 
+    dosagem VARCHAR(200),
+    frequencia VARCHAR(200),
+    duracao VARCHAR(200),
+    in_veterinario INT REFERENCES Veterinario(in_veterinario) ON DELETE SET NULL
     );`
 }
 
@@ -154,18 +248,21 @@ const runMigrations = async () => {
     try {
         await createEnderecoTable()
         await createTelefoneTable()
-        await createLoginTable()
         await createDonoTable()
         await createVeterinariaTable()
+        await createEspecialidadeTable()
+        await createVeterinarioTable()
         await createAnimalTable()
-        await createVacinaTable()
-        await createMedicamentoTable()
-        await createConsultaTable()
-        await createExameTable() 
         await createDocumentoTable()
+        await createVacinaTable()
+        await createConsultaTable()
+        await createExameTable()
+        await createHistoricoSaudeTable()
         await createProntuarioTable()
+        await createReceitaTable()
+
         //await createTesteTable()
-        console.log('Todas as tabelas foram criadas com sucesso.');
+         console.log('Todas as tabelas foram criadas com sucesso.');
     } catch (error) {
         console.error('Erro ao criar tabelas:', error);
     }
@@ -174,3 +271,19 @@ const runMigrations = async () => {
 module.exports = {
     runMigrations
 }
+
+
+/*
+
+CREATE TABLE DicaCuidado (
+    id SERIAL PRIMARY KEY,                          -- ID único da dica, gerado automaticamente
+    categoria VARCHAR(50) NOT NULL,                -- Categoria da dica (ex: Alimentação, Exercícios)
+    titulo VARCHAR(100) NOT NULL,                  -- Título da dica
+    descricao TEXT,                                 -- Descrição geral da dica
+    dicas TEXT[],                                   -- Lista de dicas (array de texto)
+    video_url VARCHAR(255),                         -- URL do vídeo associado (opcional)
+    imagem_url VARCHAR(255),                        -- URL da imagem associada à dica (opcional)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Data e hora de criação da dica
+);
+
+*/

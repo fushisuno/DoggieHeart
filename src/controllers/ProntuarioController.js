@@ -2,9 +2,9 @@ const ProntuarioModel = require('../models/Prontuario');
 
 class ProntuarioController {
     static async createProntuario(req, res) {
-        const { in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes } = req.body;
+        const { in_animal, data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario } = req.body;
         try {
-            const prontuario = await ProntuarioModel.createProntuario(in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes);
+            const prontuario = await ProntuarioModel.createProntuario(in_animal, data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario);
             res.status(201).json(prontuario);
         } catch (error) {
             console.error(error);
@@ -14,12 +14,13 @@ class ProntuarioController {
 
     static async updateProntuario(req, res) {
         const { in_prontuario } = req.params;
-        const { in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes } = req.body;
+        const { data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario } = req.body;
         try {
-            if (!await ProntuarioModel.getByProntuarioId(in_prontuario)) {
+            const existingProntuario = await ProntuarioModel.getByProntuarioId(in_prontuario);
+            if (!existingProntuario) {
                 return res.status(404).json({ message: "Prontuário não existe" });
             }
-            const prontuario = await ProntuarioModel.updateProntuario(in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes, in_prontuario);
+            const prontuario = await ProntuarioModel.updateProntuario(data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario, in_prontuario);
             return res.status(200).json(prontuario);
         } catch (error) {
             console.error(error);
@@ -30,7 +31,8 @@ class ProntuarioController {
     static async deleteProntuario(req, res) {
         const { in_prontuario } = req.params;
         try {
-            if (!await ProntuarioModel.getByProntuarioId(in_prontuario)) {
+            const existingProntuario = await ProntuarioModel.getByProntuarioId(in_prontuario);
+            if (!existingProntuario) {
                 return res.status(404).json({ message: "Prontuário não existe" });
             }
             await ProntuarioModel.deleteProntuario(in_prontuario);

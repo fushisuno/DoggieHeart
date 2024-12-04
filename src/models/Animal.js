@@ -1,10 +1,11 @@
+const sql = require('../config/db');
 const db = require('../config/db');
 
 class Animal {
-    static async createAnimal(nome, raca, idade, in_dono, in_veterinaria) {
+    static async createAnimal(nome, especie, raca, idade, sexo, peso, foto, in_dono, in_veterinaria) {
         const query = await db`
-            INSERT INTO Animal(nome, raca, idade, in_dono, in_veterinaria)
-            VALUES(${nome}, ${raca}, ${idade}, ${in_dono}, ${in_veterinaria})
+            INSERT INTO Animal(nome, especie, raca, idade, sexo, peso, foto, in_dono, in_veterinaria)
+            VALUES(${nome}, ${especie}, ${raca}, ${idade}, ${sexo}, ${peso}, ${foto}, ${in_dono}, ${in_veterinaria})
             RETURNING *
         `.catch(error => {
             console.error(error);
@@ -13,13 +14,17 @@ class Animal {
         return query[0];
     }
 
-    static async updateAnimal(nome, raca, idade, in_dono, in_veterinaria, in_animal) {
+    static async updateAnimal(nome, especie, raca, idade, sexo, peso, foto, in_dono, in_veterinaria, in_animal) {
         const query = await db`
             UPDATE Animal
             SET
                 nome = ${nome},
+                especie = ${especie},
                 raca = ${raca},
                 idade = ${idade},
+                sexo = ${sexo},
+                peso = ${peso},
+                foto = ${foto},
                 in_dono = ${in_dono},
                 in_veterinaria = ${in_veterinaria}
             WHERE in_animal = ${in_animal}
@@ -53,13 +58,14 @@ class Animal {
         return query[0];
     }
 
-    static async getAllAnimal() {
-        const query = await db`SELECT * FROM Animal`.catch(error => {
+    static async getAllAnimal(in_dono) {
+        const query = await db`SELECT * FROM Animal WHERE in_dono = ${in_dono};`.catch(error => {
             console.error(error);
             throw new Error("Erro interno ao buscar todos os animais");
         });
         return query;
     }
+
     static async getAllAnimalDono(in_dono) {
         const query = await db`
         SELECT * FROM Animal as a 
@@ -71,6 +77,15 @@ class Animal {
             throw new Error("Erro interno ao buscar todos os animais");
         });
         return query;
+    }
+    static async getImageAnimalId(in_animal){
+        const query = await sql`
+        SELECT foto FROM Animal
+        WHERE in_animal = ${in_animal}`.catch(error => {
+            console.error(error);
+            throw new Error("Erro interno ao buscar foto do animal");
+        });
+        return query[0];
     }
 }
 

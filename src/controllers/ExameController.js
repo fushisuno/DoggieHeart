@@ -2,9 +2,9 @@ const ExameModel = require('../models/Exame');
 
 class ExameController {
     static async createExame(req, res) {
-        const { tipo_exame, data_exame, resultado, observacoes } = req.body;
+        const { tipo_exame, data_exame, resultados, in_consulta } = req.body;
         try {
-            const exame = await ExameModel.createExame(tipo_exame, data_exame, resultado, observacoes);
+            const exame = await ExameModel.createExame(tipo_exame, data_exame, resultados, in_consulta);
             res.status(201).json(exame);
         } catch (error) {
             console.error(error);
@@ -14,12 +14,13 @@ class ExameController {
 
     static async updateExame(req, res) {
         const { in_exame } = req.params;
-        const { tipo_exame, data_exame, resultado, observacoes } = req.body;
+        const { tipo_exame, data_exame, resultado } = req.body;
         try {
-            if (!await ExameModel.getByExameId(in_exame)) {
+            const existingExame = await ExameModel.getByExameId(in_exame);
+            if (!existingExame) {
                 return res.status(404).json({ message: "Exame não existe" });
             }
-            const exame = await ExameModel.updateExame(tipo_exame, data_exame, resultado, observacoes, in_exame);
+            const exame = await ExameModel.updateExame(tipo_exame, data_exame, resultado, in_exame);
             return res.status(200).json(exame);
         } catch (error) {
             console.error(error);

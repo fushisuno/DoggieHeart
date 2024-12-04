@@ -1,69 +1,71 @@
-const MedicamentoModel = require('../models/Medicamento');
+const ReceitaModel = require('../models/Receita');
 
-class MedicamentoController {
-    static async createMedicamento(req, res) {
-        const { nome, dosagem, frequencia, data_inicio, data_fim, observacoes } = req.body;
+class ReceitaController {
+    static async createReceita(req, res) {
+        const { in_consulta, medicamento, dosagem, frequencia, duracao, in_veterinario } = req.body;
         try {
-            const medicamento = await MedicamentoModel.createMedicamento(nome, dosagem, frequencia, data_inicio, data_fim, observacoes);
-            res.status(201).json(medicamento);
+            const receita = await ReceitaModel.createReceita(in_consulta, medicamento, dosagem, frequencia, duracao, in_veterinario);
+            res.status(201).json(receita);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Erro ao criar medicamento' });
+            res.status(500).json({ message: 'Erro ao criar receita' });
         }
     }
 
-    static async updateMedicamento(req, res) {
-        const { in_medicamento } = req.params;
-        const { nome, dosagem, frequencia, data_inicio, data_fim, observacoes } = req.body;
+    static async updateReceita(req, res) {
+        const { in_receita } = req.params;
+        const { in_consulta, medicamento, dosagem, frequencia, duracao, in_veterinario } = req.body;
         try {
-            if (!await MedicamentoModel.getByMedicamentoId(in_medicamento)) {
-                return res.status(404).json({ message: "Medicamento não existe" });
+            const existingReceita = await ReceitaModel.getByReceitaId(in_receita);
+            if (!existingReceita) {
+                return res.status(404).json({ message: "Receita não existe" });
             }
-            const medicamento = await MedicamentoModel.updateMedicamento(nome, dosagem, frequencia, data_inicio, data_fim, observacoes, in_medicamento);
-            return res.status(200).json(medicamento);
+            const receita = await ReceitaModel.updateReceita(in_receita, in_consulta, medicamento, dosagem, frequencia, duracao, in_veterinario);
+            return res.status(200).json(receita);
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ message: 'Erro ao atualizar medicamento' });
+            return res.status(500).json({ message: 'Erro ao atualizar receita' });
         }
     }
 
-    static async deleteMedicamento(req, res) {
-        const { in_medicamento } = req.params;
+    static async deleteReceita(req, res) {
+        const { in_receita } = req.params;
         try {
-            if (!await MedicamentoModel.getByMedicamentoId(in_medicamento)) {
-                return res.status(404).json({ message: "Medicamento não existe" });
+            const existingReceita = await ReceitaModel.getByReceitaId(in_receita);
+            if (!existingReceita) {
+                return res.status(404).json({ message: "Receita não existe" });
             }
-            await MedicamentoModel.deleteMedicamento(in_medicamento);
-            return res.status(200).json({ message: "Medicamento excluído" });
+            await ReceitaModel.deleteReceita(in_receita);
+            return res.status(200).json({ message: "Receita excluída" });
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ message: 'Erro ao deletar medicamento' });
+            return res.status(500).json({ message: 'Erro ao deletar receita' });
         }
     }
 
-    static async getByMedicamentoId(req, res) {
-        const { in_medicamento } = req.params;
+    static async getByReceitaId(req, res) {
+        const { in_receita } = req.params;
         try {
-            const medicamento = await MedicamentoModel.getByMedicamentoId(in_medicamento);
-            if (!medicamento) {
-                return res.status(404).json({ message: "Medicamento não existe" });
+            const receita = await ReceitaModel.getByReceitaId(in_receita);
+            if (!receita) {
+                return res.status(404).json({ message: "Receita não existe" });
             }
-            return res.status(200).json(medicamento);
+            return res.status(200).json(receita);
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ message: 'Erro ao buscar medicamento' });
+            return res.status(500).json({ message: 'Erro ao buscar receita' });
         }
     }
 
-    static async getAllMedicamentos(req, res) {
+    static async getAllReceitas(req, res) {
         try {
-            const medicamentos = await MedicamentoModel.getAllMedicamentos();
-            res.status(200).json(medicamentos);
+            const receitas = await ReceitaModel.getAllReceitas();
+            res.status(200).json(receitas);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Erro ao buscar medicamentos' });
+            res.status(500).json({ message: 'Erro ao buscar receitas' });
         }
     }
 }
 
-module.exports = MedicamentoController;
+module.exports = ReceitaController;

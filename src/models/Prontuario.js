@@ -1,8 +1,9 @@
 class Prontuario {
-    static async createProntuario(in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes) {
+    
+    static async createProntuario(in_animal, data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario) {
         const query = await db`
-        INSERT INTO Prontuario(in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes)
-        VALUES(${in_animal}, ${in_vacina}, ${in_medicamento}, ${in_exame}, ${in_consulta}, ${observacoes})
+        INSERT INTO Prontuario(in_animal, data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario)
+        VALUES(${in_animal}, ${data_abertura}, ${historico_medicamento}, ${alergias}, ${condicoes_preexistentes}, ${observacoes}, ${in_veterinario})
         RETURNING *
         `.catch(error => {
             console.error(error);
@@ -12,16 +13,17 @@ class Prontuario {
         return query[0];
     }
     
-    static async updateProntuario(in_animal, in_vacina, in_medicamento, in_exame, in_consulta, observacoes, in_prontuario) {
+    static async updateProntuario(data_abertura, historico_medicamento, alergias, condicoes_preexistentes, observacoes, in_veterinario, in_prontuario) {
         const query = await db`
         UPDATE Prontuario
         SET
-            in_animal = ${in_animal},
-            in_vacina = ${in_vacina},
-            in_medicamento = ${in_medicamento},
-            in_exame = ${in_exame},
-            in_consulta = ${in_consulta},
-            observacoes = ${observacoes}
+            data_abertura = ${data_abertura},
+            historico_medicamento = ${historico_medicamento},
+            alergias = ${alergias},
+            condicoes_preexistentes = ${condicoes_preexistentes},
+            observacoes = ${observacoes},
+            in_veterinario = ${in_veterinario}
+            
         WHERE in_prontuario = ${in_prontuario}
         RETURNING in_prontuario
         `.catch(error => {

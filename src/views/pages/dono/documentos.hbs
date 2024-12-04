@@ -1,0 +1,271 @@
+<title>Documentos</title>
+
+<div class="sidebar">
+  <nav class="sidebar-menu">
+    <a href="#todos" class="active">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M14,17H7V15H14M17,13H7V11H17M17,9H7V7H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
+      </svg>
+      Todos os Documentos
+    </a>
+    <a href="#vacinas">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M19.5,3.5L18,2L16.5,3.5L15,2L13.5,3.5L12,2L10.5,3.5L9,2L7.5,3.5L6,2L4.5,3.5L3,2V22L4.5,20.5L6,22L7.5,20.5L9,22L10.5,20.5L12,22L13.5,20.5L15,22L16.5,20.5L18,22L19.5,20.5L21,22V2L19.5,3.5M19,20H5V4H19V20M8,14H16V12H8V14M8,10H16V8H8V10M8,6H16V4H8V6Z" />
+      </svg>
+      Carteira de Vacinação
+    </a>
+    <a href="#exames">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M18,2A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H18M18,4H6V20H18V4M7,5H17V7H7V5M7,9H17V11H7V9M7,13H17V15H7V13M7,17H14V19H7V17Z" />
+      </svg>
+      Resultados de Exames
+    </a>
+    <a href="#receitas">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M18,14H14V18H10V14H6V10H10V6H14V10H18M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
+      </svg>
+      Receitas Médicas
+    </a>
+  </nav>
+</div>
+
+<main class="main-content">
+  <section class="documents-header">
+    <h1 class="documents-title">Meus Documentos</h1>
+    <p class="documents-subtitle">Gerencie todos os documentos dos seus pets em um só lugar</p>
+  </section>
+
+  <section class="intro-section">
+    <div class="intro-container">
+      <div class="intro-text">
+        <h2>Organize os Documentos do seu Pet</h2>
+        <p>Armazene e gerencie todos os documentos importantes do seu animal de estimação com facilidade. Mantenha tudo ao seu alcance, sempre que precisar!</p>
+      </div>
+      
+      <div class="quick-tip">
+        <div class="tip-icon">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,2A7,7 0 0,1 19,9C19,11.38 17.81,13.47 16,14.74V17A1,1 0 0,1 15,18H9A1,1 0 0,1 8,17V14.74C6.19,13.47 5,11.38 5,9A7,7 0 0,1 12,2M9,21V20H15V21A1,1 0 0,1 14,22H10A1,1 0 0,1 9,21M12,4A5,5 0 0,0 7,9C7,11.05 8.23,12.81 10,13.58V16H14V13.58C15.77,12.81 17,11.05 17,9A5,5 0 0,0 12,4Z" />
+          </svg>
+        </div>
+        <div class="tip-content">
+          <h3>Dica Importante</h3>
+          <p>Mantenha sempre atualizados os documentos essenciais:</p>
+          <ul>
+            <li>Carteira de vacinação</li>
+            <li>Resultados de exames</li>
+            <li>Receitas médicas</li>
+            <li>Laudos veterinários</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="document-controls">
+    <div class="search-bar">
+      <input type="text" id="documentSearch" placeholder="Pesquisar documentos...">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+      </svg>
+    </div>
+    
+    <div class="filter-controls">
+      <select id="typeFilter">
+        <option value="">Tipo de Documento</option>
+        <option value="receita">Receitas</option>
+        <option value="exame">Exames</option>
+        <option value="vacina">Vacinas</option>
+        <option value="laudo">Laudos</option>
+      </select>
+      
+      <select id="dateFilter">
+        <option value="">Data de Upload</option>
+        <option value="today">Hoje</option>
+        <option value="week">Última Semana</option>
+        <option value="month">Último Mês</option>
+        <option value="year">Último Ano</option>
+      </select>
+    </div>
+  </section>
+
+  <section id="todos" class="document-section active">
+    <div class="upload-area">
+      <svg style="width:48px;height:48px;color:var(--primary);margin-bottom:1rem" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" />
+      </svg>
+      <h3>Arraste e solte documentos aqui</h3>
+      <p>ou clique para fazer upload</p>
+    </div>
+    <div class="document-grid">
+      <!-- Documentos recentes serão listados aqui -->
+    </div>
+  </section>
+
+  <section id="vacinas" class="document-section">
+    <div class="document-grid">
+      <div class="document-card" data-id="1" data-type="vacina" data-upload-date="2024-03-15">
+        <h3>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19.5,3.5L18,2L16.5,3.5L15,2L13.5,3.5L12,2L10.5,3.5L9,2L7.5,3.5L6,2L4.5,3.5L3,2V22L4.5,20.5L6,22L7.5,20.5L9,22L10.5,20.5L12,22L13.5,20.5L15,22L16.5,20.5L18,22L19.5,20.5L21,22V2L19.5,3.5Z" />
+          </svg>
+          Vacina Antirrábica
+        </h3>
+        <div class="document-date">Aplicada em: 15/03/2024</div>
+        <span class="document-status status-valid">Válida</span>
+        <div class="document-details">
+          <p>Próxima dose: 15/03/2025</p>
+          <p>Veterinário: Dr. Carlos Silva</p>
+        </div>
+        <div class="document-actions">
+          <button class="btn btn-primary">Baixar PDF</button>
+          <button class="btn btn-secondary">Compartilhar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="exames" class="document-section">
+    <div class="document-grid">
+      <div class="document-card" data-id="2" data-type="exame" data-upload-date="2024-03-10">
+        <h3>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M18,2A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2H18M18,4H6V20H18V4M7,5H17V7H7V5M7,9H17V11H7V9M7,13H17V15H7V13M7,17H14V19H7V17Z" />
+          </svg>
+          Hemograma Completo
+        </h3>
+        <div class="document-date">Realizado em: 10/03/2024</div>
+        <div class="document-details">
+          <p>Laboratório: PetLab</p>
+          <p>Médico Solicitante: Dra. Ana Paula</p>
+        </div>
+        <div class="document-actions">
+          <button class="btn btn-primary">Ver Resultado</button>
+          <button class="btn btn-secondary">Baixar PDF</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="receitas" class="document-section">
+    <div class="document-grid">
+      <div class="document-card" data-id="3" data-type="receita" data-upload-date="2024-03-05">
+        <h3>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M18,14H14V18H10V14H6V10H10V6H14V10H18M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
+          </svg>
+          Prescrição Anti-inflamatório
+        </h3>
+        <div class="document-date">Emitida em: 05/03/2024</div>
+        <span class="document-status status-valid">Válida por mais 25 dias</span>
+        <div class="document-details">
+          <p>Medicamento: Prednisolona 20mg</p>
+          <p>Veterinário: Dr. Roberto Mendes</p>
+        </div>
+        <div class="document-actions">
+          <button class="btn btn-primary">Baixar Receita</button>
+          <button class="btn btn-secondary">Imprimir</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="uploadModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <div class="modal-header">
+      <h2>Carregar Novo Documento</h2>
+    </div>
+    <form class="upload-form" id="uploadForm">
+      <div class="file-input-wrapper">
+        <svg style="width:48px;height:48px;color:var(--primary);margin-bottom:1rem" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" />
+        </svg>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" style="display:none">
+        <p>Clique para selecionar ou arraste seu arquivo aqui</p>
+        <p class="file-types">Formatos aceitos: JPG, PNG, PDF, DOC, DOCX (máx. 10MB)</p>
+      </div>
+      
+      <div>
+        <label for="documentDescription">Descrição do Documento:</label>
+        <textarea id="documentDescription" class="description-input" 
+                  placeholder="Ex: Receita da consulta de vacinação"></textarea>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelUpload">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="viewDocumentModal" class="modal">
+  <div class="modal-content modal-lg">
+    <button class="modal-close">&times;</button>
+    <div class="modal-header">
+      <h2 id="viewDocumentTitle">Visualizar Documento</h2>
+    </div>
+    <div class="document-viewer">
+      <div class="document-preview">
+        <iframe id="documentFrame" title="Document Preview"></iframe>
+      </div>
+      <div class="document-info">
+        <div class="info-section">
+          <h3>Informações do Documento</h3>
+          <p><strong>Data de Upload:</strong> <span id="docUploadDate"></span></p>
+          <p><strong>Tipo:</strong> <span id="docType"></span></p>
+        </div>
+        <div class="notes-section">
+          <h3>Notas</h3>
+          <textarea id="documentNotes" placeholder="Adicione suas anotações aqui..."></textarea>
+          <button class="btn btn-secondary" id="saveNotes">Salvar Notas</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="downloadDocument">
+            <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+            </svg>
+            Baixar
+          </button>
+          <button class="btn btn-secondary" id="closeViewer">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="editDocumentModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <div class="modal-header">
+      <h2>Editar Documento</h2>
+    </div>
+    <form class="edit-form" id="editForm">
+      <div class="form-group">
+        <label for="editTitle">Título</label>
+        <input type="text" id="editTitle" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="editDescription">Descrição</label>
+        <textarea id="editDescription" rows="4"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="editImportant">
+          Marcar como Importante
+        </label>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelEdit">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="./js/documentos.js"></script>
